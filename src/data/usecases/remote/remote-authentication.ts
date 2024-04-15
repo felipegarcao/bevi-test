@@ -1,17 +1,42 @@
-import { DomainUser } from "../../../domain/models/user"
+import { BadRequestError } from "../../../domain/errors/badRequestError";
+import { RequestTimeoutError } from "../../../domain/errors/requestTimeout";
+import { UnauthorizedError } from "../../../domain/errors/unathorizedError";
+import { UnexpectedError } from "../../../domain/errors/unexpectedError";
+import { DomainAuthenticationToken } from "../../../domain/models/authentication-token";
+import { Authentication } from "../../../domain/usecases/remote/remote-authentication";
+import { HttpBeviResponse, HttpErrorResponse, HttpClient, HttpStatusCode } from "../../protocols/http/http-client";
 
 
 
-export interface Authentication {
-  requestAuth(params: Authentication.Params): Promise<void>
-}
+export class RemoteAuthentication implements Authentication {
+
+  constructor(
+    private readonly HttpClient: HttpClient<
+    HttpBeviResponse<DomainAuthenticationToken>,
+    HttpErrorResponse
+  >
+  ) {  }
+
+  async requestAuth(params: Authentication.Params): Promise<DomainAuthenticationToken> {
+      const httpResponse = await this.HttpClient.request({
+        url: '',
+        method: 'post',
+        body: params
+      })
 
 
-export namespace Authentication {
-  export type LoginScreenReturn = DomainUser;
-
-  export type Params = {
-    email: string;
-    password: string;
+    switch (httpResponse.statusCode) {
+      case HttpStatusCode.ok:
+        return httpResponse.body.data;
+      case HttpStatusCode.unauthorized:
+        throw new UnauthorizedError();
+      case HttpStatusCode.requestTimeout:
+        throw new RequestTimeoutError();
+      case HttpStatusCode.badRequest:
+        throw new BadRequestError(httpResponse.error.errors[0].value);
+      default:
+        throw new UnexpectedError();
+    }
   }
+
 }

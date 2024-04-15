@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
-import { Login } from "../../../presentation/pages/sign-in/Login";
+import { MakeLoginScreen } from "../../factories/pages/sign-in/login-factory";
 
 
 export default function SignInRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<MakeLoginScreen />} />
 
     </Routes>
   )

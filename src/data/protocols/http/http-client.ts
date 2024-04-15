@@ -35,7 +35,7 @@ export type HttpError = {
   value: string;
 }
 
-export type HttpUnimedResponse<R = any> = {
+export type HttpBeviResponse<R = any> = {
   success: boolean;
   status: number;
   data?: R
