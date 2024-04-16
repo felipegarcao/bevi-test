@@ -1,10 +1,10 @@
-import { GetStorage } from "../../data/protocols/cache";
+import { GetStorage } from "@/data/protocols/cache";
 import {
   HttpClient,
   HttpRequest,
   HttpResponse,
-} from "../../data/protocols/http/http-client";
-import { DomainAuthenticationToken } from "../../domain/models/authentication-token";
+} from "@/data/protocols/http/http-client";
+import { DomainAuthenticationToken } from "@/domain/models/authentication-token";
 
 export class AuthorizeHttpClientDecorator implements HttpClient {
   constructor(

@@ -1,17 +1,17 @@
-import { BadRequestError } from "../../../domain/errors/badRequestError";
-import { RequestTimeoutError } from "../../../domain/errors/requestTimeout";
-import { UnauthorizedError } from "../../../domain/errors/unathorizedError";
-import { UnexpectedError } from "../../../domain/errors/unexpectedError";
-import { UnprocessableError } from "../../../domain/errors/UnprocessableError";
-import { DomainAuthenticationToken } from "../../../domain/models/authentication-token";
-import { DomainProduct } from "../../../domain/models/product";
-import { Products } from "../../../domain/usecases/remote/remote-products";
+import { BadRequestError } from "@/domain/errors/badRequestError";
+import { RequestTimeoutError } from "@/domain/errors/requestTimeout";
+import { UnauthorizedError } from "@/domain/errors/unathorizedError";
+import { UnexpectedError } from "@/domain/errors/unexpectedError";
+import { UnprocessableError } from "@/domain/errors/UnprocessableError";
+import { DomainAuthenticationToken } from "@/domain/models/authentication-token";
+import { DomainProduct } from "@/domain/models/product";
+import { Products } from "@/domain/usecases/remote/remote-products";
 import {
   HttpBeviResponse,
   HttpErrorResponse,
   HttpClient,
   HttpStatusCode,
-} from "../../protocols/http/http-client";
+} from "@/data/protocols/http/http-client";
 
 export class RemoteProducts implements Products {
   constructor(

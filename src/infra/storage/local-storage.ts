@@ -1,4 +1,4 @@
-import { GetStorage, SetStorage } from "../../data/protocols/cache"
+import { GetStorage, SetStorage } from "@/data/protocols/cache"
 
 export class LocalStorageCache<R = any> implements GetStorage<R>, SetStorage{
   set (key: string, value?: object): void {

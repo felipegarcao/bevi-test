@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { STATUS } from "../../../../../../domain/models/product";
+import { STATUS } from "@/domain/models/product";
 
 
 export const CreateProductBodySchema = z.object({

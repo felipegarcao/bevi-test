@@ -16,6 +16,7 @@
     "@reduxjs/toolkit": "^2.2.3",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
+    "clsx": "^2.1.0",
     "lucide-react": "^0.368.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -27,6 +28,7 @@
     "redux-persist": "^6.0.0",
     "sass": "^1.75.0",
     "tailwind-variants": "^0.2.1",
+    "url": "^0.11.3",
     "zod": "^3.22.4"
   },
   "devDependencies": {

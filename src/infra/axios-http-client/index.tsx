@@ -1,6 +1,6 @@
 
 import axios, { AxiosResponse } from 'axios'
-import { HttpClient, HttpRequest, HttpResponse, HttpStatusCode } from '../../data/protocols/http/http-client'
+import { HttpClient, HttpRequest, HttpResponse, HttpStatusCode } from '@/data/protocols/http/http-client'
 
 export class AxiosHttpClient implements HttpClient {
   constructor(

@@ -1,6 +1,7 @@
 import { useRegisterProductsControllerDI } from "./types";
 import { useRegisterProductController } from "./useRegisterProductController";
-import * as Input from '../../../../../components/Input'
+import * as Input from '@/presentation/components/Input'
+import { Button } from "@/presentation/components/Button";
 
 export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
 
@@ -9,10 +10,9 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
     form: {
       register,
       handleSubmit,
-      formState: { errors },
- 
+      formState: { errors, isSubmitting },
+
     },
-    loading,
     params,
     options,
   } = useRegisterProductController({ service })
@@ -88,20 +88,18 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
             <Input.Root error={errors.stock_quantity?.message}>
               <Input.Control
                 type="number"
-                {...register('stock_quantity', {
-                  valueAsNumber: true,
-
-                })}
+                {...register('stock_quantity',
+                {valueAsNumber: true})}
                 min={0}
               />
             </Input.Root>
 
           </label>
-
-          <button className="btn btn-info col mt-4 text-white" type="submit">
-            {params ? 'Alterar' : 'Cadastrar'}
-          </button>
         </div>
+
+        <Button className="mt-4 col" type="submit" loading={isSubmitting}>
+          <span> {params ? 'Alterar' : 'Cadastrar'}</span>
+        </Button>
 
       </form>
     </div>

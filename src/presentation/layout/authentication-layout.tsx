@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import { userReducerAdapter } from "../../main/adapters/user-reducer-adapter";
+import { userReducerAdapter } from "@/main/adapters/user-reducer-adapter";
 import { LogOut } from "lucide-react";
 
 export function AuthenticationLayout() {

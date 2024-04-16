@@ -1,9 +1,10 @@
 import { Edit, PlusCircle, Search, Trash } from "lucide-react";
 import { useListProductsControllerDI } from "./types";
 import { useListProductsController } from "./useListProductsController";
-import { Loading } from "../../../../../components/Loading";
-import { Badge } from "../../../../../components/Badge";
-import * as Input from '../../../.../../../../components/Input'
+import { Loading } from "@/presentation/components/Loading";
+import { Badge } from "@/presentation/components/Badge";
+import * as Input from '@/presentation/components/Input'
+import { Button } from "@/presentation/components/Button";
 
 export function ListProducts({ service }: useListProductsControllerDI) {
   const { searchProducts, loading, setSearch, handleToGoRegisterProduct, handleEditProduct } = useListProductsController({
@@ -32,14 +33,14 @@ export function ListProducts({ service }: useListProductsControllerDI) {
 
           </div>
 
-          <button
+          <Button
             type="button"
-            className="col-lg-2 btn btn-info d-flex align-items-center justify-content-center text-white font-weight-bold gap-3"
+            className="col-lg-2"
             onClick={handleToGoRegisterProduct}
           >
             <PlusCircle size={18} />
             Novo
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -72,7 +73,8 @@ export function ListProducts({ service }: useListProductsControllerDI) {
                     <td className="text-center">{item.stock_quantity}</td>
                     <td style={{ width: "10%" }}>
                       <div className="d-flex align-items-center gap-2">
-                        <button className="btn btn-danger">
+                        <button className="btn btn-danger" data-toggle="modal">
+                       
                           <Trash size={16} />
                         </button>
                         <button className="btn btn-light" onClick={() => handleEditProduct(item)}>
@@ -88,5 +90,7 @@ export function ListProducts({ service }: useListProductsControllerDI) {
         )}
       </div>
     </div>
+
+    
   );
 }

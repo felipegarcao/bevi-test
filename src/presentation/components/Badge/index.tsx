@@ -1,4 +1,4 @@
-import { STATUS } from "../../../domain/models/product";
+import { STATUS } from "@/domain/models/product";
 import './styles.scss'
 
 export function Badge({status}: { status: STATUS }) {

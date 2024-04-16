@@ -1,17 +1,18 @@
 import { Eye, EyeOff } from "lucide-react";
 import { useLoginController } from "./useLoginController";
 import { useLoginControllerDI } from "./types";
-import * as Input from '../../../components/Input'
+import * as Input from '@/presentation/components/Input'
+import { Button } from "@/presentation/components/Button";
 
 export function Login({ remoteAuthentication, remoteUserData, storage }: useLoginControllerDI) {
   const {
     visibilePassword,
     setVisiblePassword,
     onHandleLogin,
-    loading,
     form: {
       register,
       handleSubmit,
+      formState: {isSubmitting}
     },
   } = useLoginController({
     remoteAuthentication,
@@ -54,17 +55,9 @@ export function Login({ remoteAuthentication, remoteUserData, storage }: useLogi
           </Input.Root>
 
 
-          <button className="btn btn-dark" type="submit" disabled={loading}>
-            {
-              loading ? (
-                <div className="d-flex flex-column align-items-center justify-content-center gap-2">
-                  <div className="spinner-border" role="status"></div>
-                </div>
-              ) : (
-                <span>Efetuar Login</span>
-              )
-            }
-          </button>
+          <Button loading={isSubmitting}>
+            <span>Efetuar Login</span>
+          </Button>
         </form>
       </div>
     </div>

@@ -1,5 +1,5 @@
-import { DomainAuthenticationToken } from "../../models/authentication-token";
-import { DomainUser } from "../../models/user";
+import { DomainAuthenticationToken } from "@/domain/models/authentication-token";
+import { DomainUser } from "@/domain/models/user";
 import { Authentication } from "./remote-authentication";
 
 export interface AuthenticationUser {

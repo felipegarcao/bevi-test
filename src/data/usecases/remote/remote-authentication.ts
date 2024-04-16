@@ -1,17 +1,16 @@
-import { BadRequestError } from "../../../domain/errors/badRequestError";
-import { RequestTimeoutError } from "../../../domain/errors/requestTimeout";
-import { UnauthorizedError } from "../../../domain/errors/unathorizedError";
-import { UnexpectedError } from "../../../domain/errors/unexpectedError";
-import { UnprocessableError } from "../../../domain/errors/UnprocessableError";
-import { DomainAuthenticationToken } from "../../../domain/models/authentication-token";
-import { DomainUser } from "../../../domain/models/user";
-import { Authentication } from "../../../domain/usecases/remote/remote-authentication";
+import { BadRequestError } from "@/domain/errors/badRequestError";
+import { RequestTimeoutError } from "@/domain/errors/requestTimeout";
+import { UnauthorizedError } from "@/domain/errors/unathorizedError";
+import { UnexpectedError } from "@/domain/errors/unexpectedError";
+import { DomainAuthenticationToken } from "@/domain/models/authentication-token";
+import { DomainUser } from "@/domain/models/user";
+import { Authentication } from "@/domain/usecases/remote/remote-authentication";
 import {
   HttpBeviResponse,
   HttpErrorResponse,
   HttpClient,
   HttpStatusCode,
-} from "../../protocols/http/http-client";
+} from "@/data/protocols/http/http-client";
 
 export class RemoteAuthentication implements Authentication {
   constructor(

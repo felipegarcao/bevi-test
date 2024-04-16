@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { DomainUser } from "../../../domain/models/user";
+import { DomainUser } from "@/domain/models/user";
 
 const initialState: DomainUser = {
   id: 0,

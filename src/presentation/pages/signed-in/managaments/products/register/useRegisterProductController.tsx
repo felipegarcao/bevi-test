@@ -2,13 +2,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom"
-import { Products } from "../../../../../../domain/usecases/remote/remote-products";
+import { Products } from "@/domain/usecases/remote/remote-products";
 import { CreateProductBodySchema } from "./validation";
 import { useRegisterProductsControllerDI } from "./types";
 import { toast } from "react-toastify";
-import { UnauthorizedError } from "../../../../../../domain/errors/unathorizedError";
-import { userReducerAdapter } from "../../../../../../main/adapters/user-reducer-adapter";
-import { SelectObject } from "../../../../../../domain/usecases/select-object";
+import { UnauthorizedError } from "@/domain/errors/unathorizedError";
+import { userReducerAdapter } from "@/main/adapters/user-reducer-adapter";
+import { SelectObject } from "@/domain/usecases/select-object";
 
 export function useRegisterProductController({ service }: useRegisterProductsControllerDI) {
   const [loading, setLoading] = useState(false);

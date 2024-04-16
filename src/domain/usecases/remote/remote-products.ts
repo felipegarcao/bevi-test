@@ -1,4 +1,4 @@
-import { DomainProduct } from "../../models/product";
+import { DomainProduct } from "@/domain/models/product";
 
 export interface Products {
   list(): Promise<Products.Model[]>;

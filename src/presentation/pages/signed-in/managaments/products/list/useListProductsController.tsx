@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useListProductsControllerDI } from "./types";
-import { Products } from "../../../../../../domain/usecases/remote/remote-products";
-import { UnauthorizedError } from "../../../../../../domain/errors/unathorizedError";
+import { Products } from "@/domain/usecases/remote/remote-products";
+import { UnauthorizedError } from "@/domain/errors/unathorizedError";
 import { toast } from "react-toastify";
-import { userReducerAdapter } from "../../../../../../main/adapters/user-reducer-adapter";
+import { userReducerAdapter } from "@/main/adapters/user-reducer-adapter";
 import { useNavigate } from "react-router-dom";
 
 export function useListProductsController({
@@ -53,8 +53,7 @@ export function useListProductsController({
 
     try {
       const products = await service.list();
-
-
+      
       setProducts(products);
     } catch (error: any) {
       toast.error(error.message);
