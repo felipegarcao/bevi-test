@@ -19,9 +19,8 @@ export function ListProducts({ service }: useListProductsControllerDI) {
 
       <div className="mt-4">
         <div className="row align-items-center">
-          <div className="col-lg-10">
-
-            <Input.Root>
+          <div className="col-lg-10 col-md-6">
+            <Input.Root >
               <Input.Control type="text"
                 placeholder="Buscar produtos..."
                 onChange={(event) => setSearch(event.target.value)} />
@@ -29,13 +28,11 @@ export function ListProducts({ service }: useListProductsControllerDI) {
                 <Search size={25} />
               </Input.Prefix>
             </Input.Root>
-
-
           </div>
 
           <Button
             type="button"
-            className="col-lg-2"
+            className="col-lg-2 col-md-6"
             onClick={handleToGoRegisterProduct}
           >
             <PlusCircle size={18} />
@@ -74,7 +71,7 @@ export function ListProducts({ service }: useListProductsControllerDI) {
                     <td style={{ width: "10%" }}>
                       <div className="d-flex align-items-center gap-2">
                         <button className="btn btn-danger" data-toggle="modal">
-                       
+
                           <Trash size={16} />
                         </button>
                         <button className="btn btn-light" onClick={() => handleEditProduct(item)}>
@@ -91,6 +88,6 @@ export function ListProducts({ service }: useListProductsControllerDI) {
       </div>
     </div>
 
-    
+
   );
 }

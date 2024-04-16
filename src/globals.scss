@@ -2,6 +2,22 @@
   min-height: calc(100vh - 68px);
 }
 
+.row {
+  margin: auto 0px;
+  padding: 4px 0px !important;
+  flex-wrap: nowrap;
+}
+
+.grid {
+  display: grid;
+
+  
+  &.grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
 .shadow-light {
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.10);
 }

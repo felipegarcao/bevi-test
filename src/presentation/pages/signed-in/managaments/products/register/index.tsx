@@ -38,7 +38,7 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
         </label>
 
 
-        <div className="row">
+        <div className="grid grid-cols-2">
           <label className="w-100 col">
             <span className="font-size sm">Preço</span>
 
@@ -80,7 +80,7 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
           {errors.description?.message}
         </div>
 
-        <div className="row align-items-center">
+        <div className="grid align-items-center">
           <label className="w-100 col">
             <span className="font-size sm">Quantidade em estoque</span>
 
