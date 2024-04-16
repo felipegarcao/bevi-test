@@ -1,6 +1,9 @@
+import { userReducerAdapter } from "../adapters/user-reducer-adapter";
 import SignInRoutes from "./sign-in";
-
+import SignedInRoutes from "./signed-in";
 
 export default function Routes() {
-  return <SignInRoutes />
+  const { user } = userReducerAdapter();
+
+  return user.id !== 0 ? <SignedInRoutes /> : <SignInRoutes />;
 }

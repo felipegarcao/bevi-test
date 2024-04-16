@@ -14,10 +14,11 @@ export class AuthorizeHttpClientDecorator implements HttpClient {
 
   async request(data: HttpRequest): Promise<HttpResponse> {
     const token = this._storage.get("BeviToken");
-    if (token?.token) {
+
+    if (token?.access_token) {
       Object.assign(data, {
         headers: Object.assign(data.headers || {}, {
-          Authorization: "Bearer " + token.token,
+          Authorization: "Bearer " + token.access_token,
         }),
       });
     }

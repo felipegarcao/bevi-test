@@ -2,7 +2,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useLoginController } from "./useLoginController";
 import { useLoginControllerDI } from "./types";
 
-export function Login({ service, storage }: useLoginControllerDI) {
+export function Login({ remoteAuthentication, remoteUserData, storage }: useLoginControllerDI) {
   const {
     visibilePassword,
     setVisiblePassword,
@@ -13,13 +13,14 @@ export function Login({ service, storage }: useLoginControllerDI) {
       formState: { errors },
     },
   } = useLoginController({
-    service,
+    remoteAuthentication,
+    remoteUserData,
     storage,
   });
 
   return (
     <div className="row container-fluid min-vh-100 p-0 m-0">
-      <div className="col bg-black col-lg-6">{/* Alguma Imagem */}</div>
+      <div className="col bg-black col-lg-6 d-lg-block d-none">{/* Alguma Imagem */}</div>
       <div className="col col-lg-6 d-flex flex-column  justify-content-center  p-5">
         <h1 className="text-dark">Login</h1>
         <form

@@ -1,12 +1,13 @@
 import { Route, Routes } from "react-router-dom";
-import { ListProducts } from "../../../presentation/pages/signed-in/managaments/products/list";
-
+import { AuthenticationLayout } from "../../../presentation/layout/authentication-layout";
+import { MakeListProductScreen } from "../../factories/pages/signed-in/list-products-factory";
 
 export default function SignedInRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<ListProducts />} />
-
+      <Route path="/" element={<AuthenticationLayout />}>
+        <Route path="/" element={<MakeListProductScreen />} />
+      </Route>
     </Routes>
-  )
+  );
 }

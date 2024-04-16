@@ -3,6 +3,7 @@ import { DomainAuthenticationToken } from "../../../../domain/models/authenticat
 import { LocalStorageCache } from "../../../../infra/storage/local-storage"
 
 export type useLoginControllerDI = {
-  service: AuthenticationUserService
+  remoteAuthentication: AuthenticationUserService;
+  remoteUserData: AuthenticationUserService;
   storage: LocalStorageCache<DomainAuthenticationToken>
 }

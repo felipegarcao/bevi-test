@@ -40,6 +40,8 @@ export type HttpBeviResponse<R = any> = {
   status: number;
   data?: R
   messages?: any;
+  message?: any;
+  access_token: string;
 }
 
 export type HttpMethod = 'post' | 'get' | 'put' | 'delete'
@@ -51,5 +53,6 @@ export enum HttpStatusCode {
   unauthorized = 401,
   notFound = 404,
   requestTimeout = 408,
-  serverError = 500
+  serverError = 500,
+  Unprocessable = 422
 }

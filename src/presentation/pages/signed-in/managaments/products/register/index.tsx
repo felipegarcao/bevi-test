@@ -1,4 +1,4 @@
-export function RegisterProduct() {
+export function RegisterProducts() {
   return (
     <div></div>
   )

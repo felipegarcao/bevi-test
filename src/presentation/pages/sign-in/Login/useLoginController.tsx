@@ -2,15 +2,14 @@ import { useState } from "react";
 import { useLoginControllerDI } from "./types";
 import { useNavigate } from "react-router-dom";
 import { Authentication } from "../../../../domain/usecases/remote/remote-authentication";
-import { DomainAuthenticationToken } from "../../../../domain/models/authentication-token";
 import { userReducerAdapter } from "../../../../main/adapters/user-reducer-adapter";
 import { toast } from "react-toastify";
-import { UnauthorizedError } from "../../../../domain/errors/unathorizedError";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginUserBodySchema } from "./validation";
+import { DomainUser } from "../../../../domain/models/user";
 
-export function useLoginController({ service, storage }: useLoginControllerDI) {
+export function useLoginController({ remoteAuthentication, remoteUserData, storage }: useLoginControllerDI) {
   const [visibilePassword, setVisiblePassword] = useState(true);
   const [loading, setLoading] = useState(false);
 
@@ -28,23 +27,17 @@ export function useLoginController({ service, storage }: useLoginControllerDI) {
     setLoading(true);
 
     try {
-      const responseUser = await service.auth(params);
+      const responseUser = await remoteAuthentication.auth(params);
       storage.set("BeviToken", {
-        token: responseUser.access_token,
+        access_token: responseUser.access_token,
       });
 
-      // await service.auth()
+      const userData = await remoteUserData.me();
 
-      const user: DomainAuthenticationToken = responseUser;
+      const user: DomainUser = userData;
       setUser(user);
     } catch (error: any) {
-      toast.error(error.message);
-
-      if (error instanceof UnauthorizedError) {
-        toast.error(error.message);
-
-        logout();
-      }
+      toast.error(error.error);
     } finally {
       setLoading(false);
     }
