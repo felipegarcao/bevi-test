@@ -4,6 +4,7 @@ import { Products } from "../../../../../../domain/usecases/remote/remote-produc
 import { UnauthorizedError } from "../../../../../../domain/errors/unathorizedError";
 import { toast } from "react-toastify";
 import { userReducerAdapter } from "../../../../../../main/adapters/user-reducer-adapter";
+import { useNavigate } from "react-router-dom";
 
 export function useListProductsController({
   service,
@@ -11,17 +12,33 @@ export function useListProductsController({
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState<Products.Model[]>([]);
   const [search, setSearch] = useState("");
-
   const { logout } = userReducerAdapter();
+  const navigate = useNavigate()
+
+
+  function handleToGoRegisterProduct() {
+    navigate('/cadastro')
+  }
+
+
+  function handleEditProduct(product: Products.Model) {
+    navigate('/cadastro', {
+      state: {
+        product
+      }
+    })
+  }
+
+
+
 
   const searchProducts = useMemo(() => {
-    const productsFiltered = products.filter((value) => {
+    const productsFiltered = (products)?.filter((value) => {
       if (
         value.name?.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
-        value.price
-          ?.toString()
+        (value.price?.toString()
           .toLocaleLowerCase()
-          .includes(search.toLocaleLowerCase())
+          .includes(search.toLocaleLowerCase()))
       ) {
         return value;
       }
@@ -30,11 +47,13 @@ export function useListProductsController({
     return productsFiltered;
   }, [search, products]);
 
+
   async function getProducts() {
     setLoading(true);
 
     try {
       const products = await service.list();
+
 
       setProducts(products);
     } catch (error: any) {
@@ -59,5 +78,7 @@ export function useListProductsController({
     searchProducts,
     loading,
     setSearch,
+    handleToGoRegisterProduct,
+    handleEditProduct
   };
 }

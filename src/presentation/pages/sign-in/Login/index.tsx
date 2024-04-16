@@ -1,16 +1,17 @@
 import { Eye, EyeOff } from "lucide-react";
 import { useLoginController } from "./useLoginController";
 import { useLoginControllerDI } from "./types";
+import * as Input from '../../../components/Input'
 
 export function Login({ remoteAuthentication, remoteUserData, storage }: useLoginControllerDI) {
   const {
     visibilePassword,
     setVisiblePassword,
     onHandleLogin,
+    loading,
     form: {
       register,
       handleSubmit,
-      formState: { errors },
     },
   } = useLoginController({
     remoteAuthentication,
@@ -27,33 +28,42 @@ export function Login({ remoteAuthentication, remoteUserData, storage }: useLogi
           className="d-flex flex-column gap-5 mt-5"
           onSubmit={handleSubmit(onHandleLogin)}
         >
-          <div className="input-group">
-            <input
+
+          <Input.Root>
+            <Input.Control
               type="email"
-              className="form-control"
               placeholder="Usuario"
               {...register("email")}
             />
-          </div>
-          <div className="input-group">
-            <input
+          </Input.Root>
+
+          <Input.Root>
+            <Input.Control
               type={visibilePassword ? "text" : "password"}
-              className="form-control"
               placeholder="Senha"
               {...register("password")}
             />
-            <div className="input-group-append">
-              <button
-                className="input-group-text"
+            <Input.Prefix>
+              <span
                 onClick={() => setVisiblePassword(!visibilePassword)}
-                type="button"
               >
                 {visibilePassword ? <Eye /> : <EyeOff />}
-              </button>
-            </div>
-          </div>
-          <button className="btn btn-dark" type="submit">
-            Efetuar Login
+              </span>
+
+            </Input.Prefix>
+          </Input.Root>
+
+
+          <button className="btn btn-dark" type="submit" disabled={loading}>
+            {
+              loading ? (
+                <div className="d-flex flex-column align-items-center justify-content-center gap-2">
+                  <div className="spinner-border" role="status"></div>
+                </div>
+              ) : (
+                <span>Efetuar Login</span>
+              )
+            }
           </button>
         </form>
       </div>

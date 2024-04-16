@@ -1,0 +1,35 @@
+.container-app {
+  min-height: calc(100vh - 68px);
+}
+
+.shadow-light {
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.10);
+}
+
+.font-size {
+  &.xs {
+    font-size: 12px;
+  }
+
+  &.sm {
+    font-size: 14px;
+  }
+  
+  &.md {
+    font-size: 16px;
+  }
+
+  &.lg {
+    font-size: 18px;
+  }
+
+  &.xl {
+    font-size: 20px;
+  }
+}
+
+.form-control, .form-select {
+  &:focus {
+    box-shadow: none;
+  }
+}
