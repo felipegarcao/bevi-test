@@ -15,13 +15,13 @@ export function AuthenticationLayout() {
           <button className="navbar-brand btn" onClick={() => navigate('/')}>
             <img
               src="https://www.bevioficial.com.br/_next/static/media/bevi-default-m.da7ba5cc.svg"
-              width="100"
+              width="70"
               height="40"
               className="d-inline-block align-top"
               alt=""
             />
           </button>
-          <div className="d-flex align-items-center gap-2">
+          <div className="d-flex align-items-center gap-2 justify-content-center">
             <span>Olá, <strong>{user.name}</strong></span>
             <button className="btn" onClick={logout}>
               <LogOut className="text-danger" />

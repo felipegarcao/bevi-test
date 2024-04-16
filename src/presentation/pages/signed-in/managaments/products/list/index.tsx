@@ -5,6 +5,7 @@ import { Loading } from "@/presentation/components/Loading";
 import { Badge } from "@/presentation/components/Badge";
 import * as Input from '@/presentation/components/Input'
 import { Button } from "@/presentation/components/Button";
+import './styles.scss'
 
 export function ListProducts({ service }: useListProductsControllerDI) {
   const { searchProducts, loading, setSearch, handleToGoRegisterProduct, handleEditProduct } = useListProductsController({
@@ -12,14 +13,14 @@ export function ListProducts({ service }: useListProductsControllerDI) {
   });
 
   return (
-    <div className="container mx-auto flex flex-col pt-5 pb-5 gap-6">
+    <div className="container mx-auto flex flex-col pt-md-5 pt-3 pb-md-5 gap-6">
       <h1 className="text-3xl  text-info font-weight-bold">
         Produtos Cadastrados
       </h1>
 
-      <div className="mt-4">
-        <div className="row align-items-center">
-          <div className="col-lg-10 col-md-6">
+      <div className="mt-4 ">
+        <div className="container-search align-items-center">
+      
             <Input.Root >
               <Input.Control type="text"
                 placeholder="Buscar produtos..."
@@ -28,11 +29,11 @@ export function ListProducts({ service }: useListProductsControllerDI) {
                 <Search size={25} />
               </Input.Prefix>
             </Input.Root>
-          </div>
+       
 
           <Button
             type="button"
-            className="col-lg-2 col-md-6"
+          
             onClick={handleToGoRegisterProduct}
           >
             <PlusCircle size={18} />
