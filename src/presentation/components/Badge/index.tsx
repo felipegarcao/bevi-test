@@ -19,7 +19,7 @@ export function Badge({status}: { status: STATUS }) {
 
   // Renderize o componente Badge com base no status selecionado
   return (
-    <span className={`badge ${selectedStatus.className}`}>
+    <span className={`flag ${selectedStatus.className}`}>
       {selectedStatus.name}
     </span>
   );

@@ -20,14 +20,14 @@ export class RemoteProducts implements Products {
       HttpErrorResponse
     >
   ) {}
-  async updated(params: DomainProduct): Promise<void> {
 
+  async updated(params: DomainProduct): Promise<Products.Model> {
     const httpResponse = await this.HttpClient.request({
       url: "/product/update",
       method: "put",
-      body: params
+      body: params,
     });
-    
+
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
         return httpResponse.body.data;
@@ -42,9 +42,7 @@ export class RemoteProducts implements Products {
       default:
         throw new UnexpectedError();
     }
-
   }
-
 
   async list(): Promise<DomainProduct[]> {
     const httpResponse = await this.HttpClient.request({
@@ -52,7 +50,6 @@ export class RemoteProducts implements Products {
       method: "post",
     });
 
-
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
         return httpResponse.body.data;
@@ -69,18 +66,39 @@ export class RemoteProducts implements Products {
     }
   }
 
-
-  async create(params: DomainProduct): Promise<void> {
-    
+  async create(params: DomainProduct): Promise<Products.Model> {
     const httpResponse = await this.HttpClient.request({
       url: "/product/create",
       method: "post",
-      body: params
+      body: params,
     });
 
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
         return httpResponse.body;
+      case HttpStatusCode.unauthorized:
+        throw new UnauthorizedError();
+      case HttpStatusCode.requestTimeout:
+        throw new RequestTimeoutError();
+      case HttpStatusCode.badRequest:
+        throw new BadRequestError(httpResponse.body?.message);
+      case HttpStatusCode.Unprocessable:
+        throw new UnprocessableError(httpResponse.body?.message);
+      default:
+        throw new UnexpectedError();
+    }
+  }
+
+  async delete(params: Products.ParamsId): Promise<Products.Model[]> {
+    const httpResponse = await this.HttpClient.request({
+      url: "/product/delete",
+      method: "delete",
+      body: params,
+    });
+
+    switch (httpResponse.statusCode) {
+      case HttpStatusCode.ok:
+        return httpResponse.body.data;
       case HttpStatusCode.unauthorized:
         throw new UnauthorizedError();
       case HttpStatusCode.requestTimeout:
