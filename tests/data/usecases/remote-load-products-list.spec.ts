@@ -8,6 +8,9 @@ import {
 import { mockRemoteProducstListModel } from "../mocks/mock-remote-products-list";
 import { UnexpectedError } from "@/domain/errors/unexpectedError";
 import { UnprocessableError } from "@/domain/errors/UnprocessableError";
+import { render, fireEvent } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import {RegisterProducts} from '@/presentation/pages/signed-in/managaments/products/register'
 
 type sutType = {
   sut: RemoteProducts;
@@ -38,7 +41,7 @@ describe("RemoteProducts", () => {
     httpClientSpy.response = {
       statusCode: HttpStatusCode.Unprocessable,
     };
-    
+
     const promise = sut.list();
 
     await expect(promise).rejects.toThrow(new UnprocessableError());
@@ -88,14 +91,29 @@ describe("RemoteProducts", () => {
     await expect(promise).rejects.toThrow(new UnexpectedError());
   });
 
-  test('Should throw UnexpectedError if HttpClient returns 404', async () => {
-    const { sut, httpClientSpy } = makeSut()
+  test("Should throw UnexpectedError if HttpClient returns 404", async () => {
+    const { sut, httpClientSpy } = makeSut();
     httpClientSpy.response = {
-      statusCode: HttpStatusCode.notFound
-    }
+      statusCode: HttpStatusCode.notFound,
+    };
 
-    const promise = sut.list()
+    const promise = sut.list();
 
-    await expect(promise).rejects.toThrow(new UnexpectedError())
-  })
+    await expect(promise).rejects.toThrow(new UnexpectedError());
+  });
+
+  // test('Should able clicking on the Register product navigate to the Register product page',   () => {
+  //   const { getByText, history } = render(
+  //     <MemoryRouter>
+  //       <RegisterProducts />
+  //     </MemoryRouter>
+  //   );
+  
+  //   const aboutLink = getByText('About');
+  //   fireEvent.click(aboutLink);
+  
+  //   expect(history.location.pathname).toBe('/about');
+  // });
+
+
 });
