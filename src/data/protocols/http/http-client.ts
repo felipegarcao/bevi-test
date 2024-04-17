@@ -22,6 +22,7 @@ export type HttpResponse<R = any, T = any> = {
   error?: T
 }
 
+
 export type HttpErrorResponse = {
   success: boolean;
   status: number;

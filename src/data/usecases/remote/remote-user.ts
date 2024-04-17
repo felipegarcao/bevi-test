@@ -2,41 +2,37 @@ import { BadRequestError } from "@/domain/errors/badRequestError";
 import { RequestTimeoutError } from "@/domain/errors/requestTimeout";
 import { UnauthorizedError } from "@/domain/errors/unathorizedError";
 import { UnexpectedError } from "@/domain/errors/unexpectedError";
-import { DomainAuthenticationToken } from "@/domain/models/authentication-token";
-import { Authentication } from "@/domain/usecases/remote/remote-authentication";
 import {
-  HttpErrorResponse,
   HttpClient,
   HttpStatusCode,
 } from "@/data/protocols/http/http-client";
+import { DomainUser } from "@/domain/models/user";
+import { User } from "@/domain/usecases/remote/remote-user";
 
-export class RemoteAuthentication implements Authentication {
+export class RemoteUser implements User {
   constructor(
-    private readonly HttpClient: HttpClient<DomainAuthenticationToken, HttpErrorResponse>
+    private readonly HttpClient: HttpClient<DomainUser>
   ) {}
 
-  async requestAuth(
-    params: Authentication.Params
-  ): Promise<DomainAuthenticationToken> {
+  async me(): Promise<DomainUser> {
     const httpResponse = await this.HttpClient.request({
-      url: "/auth/login",
+      url: "/auth/me",
       method: "post",
-      body: params,
     });
 
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
-        return httpResponse.body;
+        return httpResponse.body
       case HttpStatusCode.unauthorized:
         throw new UnauthorizedError();
       case HttpStatusCode.requestTimeout:
         throw new RequestTimeoutError();
       case HttpStatusCode.badRequest:
-        throw new BadRequestError(
-          "Algo de errado aconteceu, tente novamente mais tarde."
-        );
+        throw new BadRequestError('Algo de errado aconteceu, tente novamente mais tarde.');
+
       default:
         throw new UnexpectedError();
     }
   }
+
 }

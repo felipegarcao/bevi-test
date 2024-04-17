@@ -27,9 +27,12 @@ export class RemoteProducts implements Products {
       body: params,
     });
 
+    const remote = httpResponse.body.data || []
+
     switch (httpResponse.statusCode) {
-      case HttpStatusCode.ok:
-        return httpResponse.body.data;
+        case HttpStatusCode.ok: return remote.map(remote => ({
+          ...remote,
+        }))
       case HttpStatusCode.unauthorized:
         throw new UnauthorizedError();
       case HttpStatusCode.requestTimeout:
@@ -51,7 +54,7 @@ export class RemoteProducts implements Products {
 
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
-        return httpResponse.body.data;
+        return httpResponse.body?.data;
       case HttpStatusCode.unauthorized:
         throw new UnauthorizedError();
       case HttpStatusCode.requestTimeout:

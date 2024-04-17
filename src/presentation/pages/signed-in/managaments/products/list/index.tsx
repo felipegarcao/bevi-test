@@ -42,7 +42,7 @@ export function ListProducts({ service }: useListProductsControllerDI) {
         </div>
       </div>
 
-      <div className="shadow-light p-3 rounded mt-5">{content}</div>
+      {content}
     </div>
   );
 }

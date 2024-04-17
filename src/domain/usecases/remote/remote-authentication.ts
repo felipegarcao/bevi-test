@@ -5,7 +5,6 @@ export interface Authentication {
   requestAuth(
     params: Authentication.Params
   ): Promise<DomainAuthenticationToken>;
-  me(): Promise<DomainUser>;
 }
 
 export namespace Authentication {

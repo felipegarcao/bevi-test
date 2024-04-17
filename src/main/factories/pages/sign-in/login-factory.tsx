@@ -3,6 +3,7 @@ import { RemoteAuthentication } from "@/data/usecases/remote/remote-authenticati
 import { LocalStorageCache } from "@/infra/storage/local-storage";
 import { Login } from "@/presentation/pages/sign-in/Login";
 import { AxiosRequestWithoutToken, AxiosRequestWithToken } from "@/main/factories/infra/make-axios-http"
+import { RemoteUser } from "@/data/usecases/remote/remote-user";
 
 export function MakeLoginScreen( ) {
   
@@ -10,8 +11,7 @@ export function MakeLoginScreen( ) {
   const remoteAuthentication = new RemoteAuthentication(AxiosRequestWithoutToken());
   const serviceAuthentication = new AuthenticationUserService(remoteAuthentication);
 
-  const remoteUserData = new RemoteAuthentication(AxiosRequestWithToken());
-  const serviceUserData =  new AuthenticationUserService(remoteUserData);
+  const serviceUserData =  new RemoteUser(AxiosRequestWithToken());
   const storage = new LocalStorageCache()
 
 

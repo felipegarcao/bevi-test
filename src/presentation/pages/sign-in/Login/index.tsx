@@ -43,7 +43,8 @@ export function Login({
         />
 
         <div>
-          <h1 className="text-dark">Login</h1>
+          <h1 className="text-dark">Credenciais de acesso</h1>
+          <span>Bem-vindo(a) ao Portal de Produtos da Bevi.</span>
 
           <form
             className="d-flex flex-column gap-5 mt-5"

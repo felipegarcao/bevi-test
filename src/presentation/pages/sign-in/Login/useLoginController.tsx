@@ -25,18 +25,19 @@ export function useLoginController({ remoteAuthentication, remoteUserData, stora
   ) => {
 
     try {
-      const responseUser = await remoteAuthentication.auth(params);
+      const responseUser = await remoteAuthentication.requestAuth(params);
+
+
       storage.set("BeviToken", {
         access_token: responseUser.access_token,
       });
-
       const userData = await remoteUserData.me();
-
       const user: DomainUser = userData;
       setUser(user);
-    } catch (error: any) {
+      
+    } catch (error) {
       toast.error(error.error);
-    } 
+    }
   };
 
   return {

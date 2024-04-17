@@ -120,7 +120,7 @@ export function useRegisterProductController({ service }: useRegisterProductsCon
       toast.success('Produto cadastrado com sucesso.')
       handleResetForm()
 
-    } catch (error: any) {
+    } catch (error) {
       toast.error(error.message);
     } finally {
       setLoading(false)

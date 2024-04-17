@@ -9,6 +9,9 @@ import { UnprocessableError } from "@/domain/errors/UnprocessableError";
 import { Loading } from "@/presentation/components/Loading";
 import { Edit, Trash } from "lucide-react";
 import { Badge } from "@/presentation/components/Badge";
+import { useResponsive } from "@/presentation/hooks/useResponsive";
+import { CardMobile } from "./local-components/card-mobile";
+import { formattedBRL } from "@/helpers/formattedBRL";
 
 export function useListProductsController({
   service,
@@ -19,6 +22,7 @@ export function useListProductsController({
   const [search, setSearch] = useState("");
   const { logout } = userReducerAdapter();
   const navigate = useNavigate();
+  const screenType = useResponsive()
 
   function handleToGoRegisterProduct() {
     navigate("/cadastro");
@@ -33,7 +37,6 @@ export function useListProductsController({
   }
 
   const searchProducts = useMemo(() => {
-    if (Array.isArray(products)) {
       const productsFiltered = products?.filter((value) => {
         if (
           value.name
@@ -47,11 +50,7 @@ export function useListProductsController({
           return value;
         }
       });
-
-      return productsFiltered;
-    } else {
-      return products;
-    }
+      return productsFiltered;    
   }, [search, products]);
 
   async function getProducts() {
@@ -61,7 +60,7 @@ export function useListProductsController({
       const products = await service.list();
 
       setProducts(products);
-    } catch (error: any) {
+    } catch (error) {
       setError(error.message);
       if (error instanceof UnauthorizedError) {
         toast(error.message, {
@@ -88,7 +87,7 @@ export function useListProductsController({
       getProducts();
 
       navigate("/");
-    } catch (error: any) {
+    } catch (error) {
       if (error instanceof UnprocessableError) {
         setProducts([]);
       }
@@ -99,71 +98,95 @@ export function useListProductsController({
 
   const content = useMemo(() => {
     if (loading) {
-      return <Loading />;
+      return (
+        <div className="shadow-light p-3 rounded mt-5">
+          <Loading />
+        </div>);
     }
 
     if (error) {
       return (
-        <div className="d-flex flex-column align-items-center justify-content-center gap-2">
-          <span className="font-size sm">{error}</span>
+        <div className="shadow-light p-3 rounded mt-5">
+          <div className="d-flex flex-column align-items-center justify-content-center gap-2">
+            <span className="font-size sm">{error}</span>
+          </div>
         </div>
       );
     }
+
 
     if (products.length !== 0 && !error) {
-      return (
-        <div className="table-responsive">
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">Nome</th>
-                <th scope="col">Preço</th>
-                <th scope="col">Status</th>
-                <th scope="col" className="text-center">
-                  Estoque
-                </th>
-                <th scope="col">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {searchProducts.map((item, index) => (
-                <tr className="align-middle font-size sm" key={index}>
-                  <td className="w-25" date-testid={`name-${index}`}>{item.name}</td>
-                  <td date-testid={`price-${index}`}>
-                    {item.price.toLocaleString("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}
-                  </td>
-                  <td date-testid={`price-${index}`}>
-                    <Badge status={item.status} />
-                  </td>
-                  <td className="text-center" date-testid={`stock_quantity-${index}`}>{item.stock_quantity}</td>
-                  <td style={{ width: "10%" }}>
-                    <div className="d-flex align-items-center gap-2">
-                      <button
-                        className="btn btn-danger"
-                        onClick={() => onHandleDelete(item.id)}
-                      >
-                        <Trash size={16} />
-                      </button>
 
-                      <button
-                        className="btn btn-light"
-                        onClick={() => handleEditProduct(item)}
-                      >
-                        <Edit size={16} />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      );
+      if (screenType === 'Desktop') {
+        return (
+          <div className="shadow-light p-3 rounded mt-5">
+            <div className="table-responsive">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Status</th>
+                    <th scope="col" className="text-center">
+                      Estoque
+                    </th>
+                    <th scope="col">Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {searchProducts.map((item, index) => (
+                    <tr className="align-middle font-size sm" key={index}>
+                      <td className="w-25" date-testid={`name-${index}`}>{item.name}</td>
+                      <td date-testid={`price-${index}`}>
+                        {formattedBRL(item.price)}
+                      </td>
+                      <td date-testid={`price-${index}`}>
+                        <Badge status={item.status} />
+                      </td>
+                      <td className="text-center" date-testid={`stock_quantity-${index}`}>{item.stock_quantity}</td>
+                      <td style={{ width: "10%" }}>
+                        <div className="d-flex align-items-center gap-2">
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => onHandleDelete(item.id)}
+                          >
+                            <Trash size={16} />
+                          </button>
+
+                          <button
+                            className="btn btn-light"
+                            onClick={() => handleEditProduct(item)}
+                          >
+                            <Edit size={16} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            {
+              searchProducts.map((product, index) => (
+                <CardMobile 
+                  key={index} 
+                  product={product}
+                  handleEditProduct={() => handleEditProduct(product)}
+                  onHandleDelete={() => onHandleDelete(product.id)} />
+              ))
+            }
+          </div>
+        )
+      }
     }
-  }, [products, search, loading, error]);
+
+
+  }, [products, search, loading, error, screenType, searchProducts]);
 
   useEffect(() => {
     getProducts();
