@@ -15,7 +15,7 @@ import {
 export class RemoteAuthentication implements Authentication {
   constructor(
     private readonly HttpClient: HttpClient<
-      HttpBeviResponse<DomainAuthenticationToken>,
+      HttpBeviResponse,
       HttpErrorResponse
     >
   ) {}

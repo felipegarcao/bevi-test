@@ -3,7 +3,6 @@ import { RequestTimeoutError } from "@/domain/errors/requestTimeout";
 import { UnauthorizedError } from "@/domain/errors/unathorizedError";
 import { UnexpectedError } from "@/domain/errors/unexpectedError";
 import { UnprocessableError } from "@/domain/errors/UnprocessableError";
-import { DomainAuthenticationToken } from "@/domain/models/authentication-token";
 import { DomainProduct } from "@/domain/models/product";
 import { Products } from "@/domain/usecases/remote/remote-products";
 import {
@@ -16,7 +15,7 @@ import {
 export class RemoteProducts implements Products {
   constructor(
     private readonly HttpClient: HttpClient<
-      HttpBeviResponse<DomainAuthenticationToken>,
+      HttpBeviResponse,
       HttpErrorResponse
     >
   ) {}
@@ -75,7 +74,7 @@ export class RemoteProducts implements Products {
 
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
-        return httpResponse.body;
+        return httpResponse.body.data;
       case HttpStatusCode.unauthorized:
         throw new UnauthorizedError();
       case HttpStatusCode.requestTimeout:
