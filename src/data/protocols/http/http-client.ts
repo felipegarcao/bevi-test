@@ -42,6 +42,7 @@ export type HttpBeviResponse<R = any> = {
   messages?: any;
   message?: any;
   access_token: string;
+
 }
 
 export type HttpMethod = 'post' | 'get' | 'put' | 'delete'

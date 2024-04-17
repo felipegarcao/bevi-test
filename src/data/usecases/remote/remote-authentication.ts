@@ -3,7 +3,6 @@ import { RequestTimeoutError } from "@/domain/errors/requestTimeout";
 import { UnauthorizedError } from "@/domain/errors/unathorizedError";
 import { UnexpectedError } from "@/domain/errors/unexpectedError";
 import { DomainAuthenticationToken } from "@/domain/models/authentication-token";
-import { DomainUser } from "@/domain/models/user";
 import { Authentication } from "@/domain/usecases/remote/remote-authentication";
 import {
   HttpBeviResponse,
@@ -14,31 +13,25 @@ import {
 
 export class RemoteAuthentication implements Authentication {
   constructor(
-    private readonly HttpClient: HttpClient<
-      HttpBeviResponse,
-      HttpErrorResponse
-    >
+    private readonly HttpClient: HttpClient<HttpBeviResponse, HttpErrorResponse>
   ) {}
 
-  async me(): Promise<DomainUser> {
+  async me(): Promise<any> {
     const httpResponse = await this.HttpClient.request({
       url: "/auth/me",
       method: "post",
     });
 
-
-
-
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
-        return httpResponse.body;
+        return { data: httpResponse.body };
       case HttpStatusCode.unauthorized:
         throw new UnauthorizedError();
       case HttpStatusCode.requestTimeout:
         throw new RequestTimeoutError();
       case HttpStatusCode.badRequest:
         throw new BadRequestError(httpResponse.error.errors[0].value);
-     
+
       default:
         throw new UnexpectedError();
     }
