@@ -22,7 +22,7 @@ export function AuthenticationLayout() {
             />
           </button>
           <div className="d-flex align-items-center gap-2 justify-content-center">
-            <span>Olá, <strong>{user.name}</strong></span>
+            <span className="d-md-block d-none">Olá, <strong>{user.name}</strong></span>
             <button className="btn" onClick={logout}>
               <LogOut className="text-danger" />
             </button>
