@@ -6,11 +6,10 @@ import {
   HttpStatusCode,
 } from "@/data/protocols/http/http-client";
 import { mockRemoteProducstListModel } from "../mocks/mock-remote-products-list";
-import { UnexpectedError } from "@/domain/errors/unexpectedError";
 import { UnprocessableError } from "@/domain/errors/UnprocessableError";
-import { render, fireEvent } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
-import {RegisterProducts} from '@/presentation/pages/signed-in/managaments/products/register'
+import { mockListProducts } from "@/tests/domain/mocks/mock-listProducts";
+import { BadRequestError } from "@/domain/errors/badRequestError";
+import { RequestTimeoutError } from "@/domain/errors/requestTimeout";
 
 type sutType = {
   sut: RemoteProducts;
@@ -48,9 +47,14 @@ describe("RemoteProducts", () => {
   });
 
   it("Should return a list of ProducstModel if HttpClient returns 200", async () => {
-    const { sut } = makeSut();
+    const { sut, httpClientSpy } = makeSut();
     const httpResult = mockRemoteProducstListModel();
     const producstList = await sut.list();
+
+    httpClientSpy.response = {
+      statusCode: HttpStatusCode.ok,
+    };
+
 
     expect(producstList).toEqual([
       {
@@ -80,40 +84,36 @@ describe("RemoteProducts", () => {
     ]);
   });
 
-  test("Should throw UnexpectedError if HttpClient returns 500", async () => {
+  test("Should throw badRequest if HttpClient returns 400", async () => {
     const { sut, httpClientSpy } = makeSut();
     httpClientSpy.response = {
-      statusCode: HttpStatusCode.serverError,
+      statusCode: HttpStatusCode.badRequest,
     };
 
-    const promise = sut.list();
+    const promise = await sut.list();
 
-    await expect(promise).rejects.toThrow(new UnexpectedError());
+    await expect(promise).rejects.toThrow(new BadRequestError());
   });
 
-  test("Should throw UnexpectedError if HttpClient returns 404", async () => {
+  test("Should throw RequestTimeoutError if HttpClient returns 408", async () => {
     const { sut, httpClientSpy } = makeSut();
     httpClientSpy.response = {
-      statusCode: HttpStatusCode.notFound,
+      statusCode: HttpStatusCode.requestTimeout,
     };
 
-    const promise = sut.list();
+    const promise = await sut.list();
 
-    await expect(promise).rejects.toThrow(new UnexpectedError());
+    await expect(promise).rejects.toThrow(new RequestTimeoutError());
   });
 
-  // test('Should able clicking on the Register product navigate to the Register product page',   () => {
-  //   const { getByText, history } = render(
-  //     <MemoryRouter>
-  //       <RegisterProducts />
-  //     </MemoryRouter>
-  //   );
-  
-  //   const aboutLink = getByText('About');
-  //   fireEvent.click(aboutLink);
-  
-  //   expect(history.location.pathname).toBe('/about');
-  // });
+  test("Should edit product", async () => {
+    const { sut, httpClientSpy } = makeSut();
 
+    const listProductsParams = mockListProducts();
 
+    await sut.updated(listProductsParams);
+
+    expect(httpClientSpy.method).toBe("put");
+    expect(httpClientSpy.body).toEqual(listProductsParams);
+  });
 });

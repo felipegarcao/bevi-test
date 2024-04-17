@@ -1,8 +1,14 @@
 
 
+import { DomainProduct } from '@/domain/models/product';
 import { Products } from '@/domain/usecases/remote/remote-products';
 import { STATUS } from '@/tests/domain/mocks/mock-listProducts';
 import {faker} from '@faker-js/faker';
+
+
+export interface ProductsList {
+  list(): Promise<Products.Model[]>;
+}
 
 
 export const mockRemoteProductsModel = (): Products.Model => ({
@@ -20,3 +26,17 @@ export const mockRemoteProducstListModel = (): Products.Model[] => ([
   mockRemoteProductsModel()
 ])
 
+export class LoadProductsListSpy implements ProductsList {
+
+  callsCounter = 0;
+  products = mockRemoteProducstListModel()
+
+  async list(): Promise<DomainProduct[]> {
+    this.callsCounter++
+    return this.products
+  }
+  
+
+
+
+}

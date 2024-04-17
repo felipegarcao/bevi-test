@@ -27,18 +27,16 @@ export class RemoteProducts implements Products {
       body: params,
     });
 
-    const remote = httpResponse.body.data || []
-
+    
     switch (httpResponse.statusCode) {
-        case HttpStatusCode.ok: return remote.map(remote => ({
-          ...remote,
-        }))
+      case HttpStatusCode.ok:
+        return httpResponse.body?.data;
       case HttpStatusCode.unauthorized:
         throw new UnauthorizedError();
       case HttpStatusCode.requestTimeout:
         throw new RequestTimeoutError();
       case HttpStatusCode.badRequest:
-        throw new BadRequestError(httpResponse.body?.message);
+        throw new BadRequestError();
       case HttpStatusCode.Unprocessable:
         throw new UnprocessableError(httpResponse.body?.message);
       default:
@@ -60,7 +58,7 @@ export class RemoteProducts implements Products {
       case HttpStatusCode.requestTimeout:
         throw new RequestTimeoutError();
       case HttpStatusCode.badRequest:
-        throw new BadRequestError(httpResponse.body?.message);
+        throw new BadRequestError();
       case HttpStatusCode.Unprocessable:
         throw new UnprocessableError(httpResponse.body?.message);
       default:

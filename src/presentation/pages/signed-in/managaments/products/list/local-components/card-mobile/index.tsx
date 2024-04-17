@@ -6,7 +6,6 @@ import { Edit, Trash } from "lucide-react";
 export function CardMobile({
   product,
   handleEditProduct,
-  onHandleDelete
 }: Props) {
   return (
     <div className="shadow-light p-3 my-2 rounded">
@@ -30,7 +29,7 @@ export function CardMobile({
       <div className="gap-2 mt-3 row px-0 mx-0">
         <button
           className="btn btn-danger col"
-          onClick={() => onHandleDelete(product.id)}
+          data-bs-toggle="modal" data-bs-target="#staticBackdrop"
         >
           <Trash size={16} />
         </button>

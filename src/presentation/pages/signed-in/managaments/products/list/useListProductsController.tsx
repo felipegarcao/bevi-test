@@ -114,9 +114,7 @@ export function useListProductsController({
       );
     }
 
-
     if (products.length !== 0 && !error) {
-
       if (screenType === 'Desktop') {
         return (
           <div className="shadow-light p-3 rounded mt-5">
@@ -148,7 +146,7 @@ export function useListProductsController({
                         <div className="d-flex align-items-center gap-2">
                           <button
                             className="btn btn-danger"
-                            onClick={() => onHandleDelete(item.id)}
+                            data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                           >
                             <Trash size={16} />
                           </button>
@@ -177,7 +175,7 @@ export function useListProductsController({
                   key={index} 
                   product={product}
                   handleEditProduct={() => handleEditProduct(product)}
-                  onHandleDelete={() => onHandleDelete(product.id)} />
+                 />
               ))
             }
           </div>

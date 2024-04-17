@@ -38,6 +38,15 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
         </label>
 
 
+        <div className="form-group">
+          <label htmlFor="textarea" className="font-size sm">Descrição</label>
+          <textarea
+            className="form-control shadow-light border"
+            id="textarea"
+            rows={3} {...register('description')}></textarea>
+          {errors.description?.message}
+        </div>
+
         <div className="grid grid-cols-2">
           <label className="w-100 col">
             <span className="font-size sm">Preço</span>
@@ -71,14 +80,7 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
           </label>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="textarea" className="font-size sm">Descrição</label>
-          <textarea
-            className="form-control shadow-light border"
-            id="textarea"
-            rows={3} {...register('description')}></textarea>
-          {errors.description?.message}
-        </div>
+
 
         <div className="grid align-items-center">
           <label className="w-100 col">
@@ -89,7 +91,7 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
               <Input.Control
                 type="number"
                 {...register('stock_quantity',
-                {valueAsNumber: true})}
+                  { valueAsNumber: true })}
                 min={0}
               />
             </Input.Root>

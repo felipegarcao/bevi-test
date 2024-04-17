@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom"
 import { Products } from "@/domain/usecases/remote/remote-products";
@@ -26,6 +26,14 @@ export function useRegisterProductController({ service }: useRegisterProductsCon
       price: 0,
       status: 1,
       stock_quantity: 0
+    },
+    values: {
+      id: params?.id,
+      description: params?.description,
+      name: params?.name,
+      price: params?.price,
+      status: params?.status,
+      stock_quantity: params?.stock_quantity
     }
   })
 
@@ -86,7 +94,7 @@ export function useRegisterProductController({ service }: useRegisterProductsCon
 
       navigate('/')
       toast.info('Produto Alterado com sucesso.')
-      handleResetForm()
+      // handleResetForm()
 
     } catch (error) {
 
@@ -127,28 +135,7 @@ export function useRegisterProductController({ service }: useRegisterProductsCon
     }
   }
 
-  function handleLoadFormWithData(productData: Products.Model) {
-
-
-
-    form.reset({
-      id: productData.id,
-      description: productData.description,
-      name: productData.name,
-      price: Number(productData.price),
-      status: Number(productData.status),
-      stock_quantity: Number(productData.stock_quantity)
-    })
-  }
-
-
-
-  useEffect(() => {
-    if (params) {
-      handleLoadFormWithData(params)
-    }
-  }, [])
-
+ 
 
 
   return {

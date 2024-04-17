@@ -7,7 +7,7 @@ export enum STATUS  {
   Falta = 3
 }
 
-export const MockListProducts = () : Products.Model => ({
+export const mockListProducts = () : Products.Model => ({
   id: faker.number.int(),
   name: faker.person.fullName(),
   price: faker.number.int(),
