@@ -16,17 +16,17 @@ export function CardMobile({
     <div className="shadow-light p-3 my-2 rounded">
       <div className="d-flex flex-column my-2">
         <strong className="font-size xs">Nome</strong>
-        <span className="font-size sm">{product.name}</span>
+        <span className="font-size sm" data-testid="name">{product.name}</span>
       </div>
 
       <div className="d-flex flex-column my-4">
         <strong className="font-size xs">Preço</strong>
-        <span className="font-size sm"> {formattedBRL(product.price)}</span>
+        <span className="font-size sm" data-testid="price">{formattedBRL(product.price)}</span>
       </div>
 
       <div className="d-flex flex-column my-4">
         <strong className="font-size xs">Estoque</strong>
-        <span className="font-size sm"> {product.stock_quantity}</span>
+        <span className="font-size sm" data-testid="stock_quantity">{product.stock_quantity}</span>
       </div>
 
       <Badge status={product.status} />

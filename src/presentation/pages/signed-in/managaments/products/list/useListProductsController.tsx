@@ -141,14 +141,14 @@ export function useListProductsController({
                 <tbody>
                   {searchProducts.map((item, index) => (
                     <tr className="align-middle font-size sm" key={index}>
-                      <td className="w-25" date-testid={`name-${index}`}>{item.name}</td>
-                      <td date-testid={`price-${index}`}>
+                      <td className="w-25" data-testid={`name`}>{item.name}</td>
+                      <td data-testid={`price`}>
                         {formattedBRL(item.price)}
                       </td>
-                      <td date-testid={`price-${index}`}>
+                      <td data-testid={`status`}>
                         <Badge status={item.status} />
                       </td>
-                      <td className="text-center" date-testid={`stock_quantity-${index}`}>{item.stock_quantity}</td>
+                      <td className="text-center" data-testid={`stock_quantity`}>{item.stock_quantity}</td>
                       <td style={{ width: "10%" }}>
                         <div className="d-flex align-items-center gap-2">
                           <Button

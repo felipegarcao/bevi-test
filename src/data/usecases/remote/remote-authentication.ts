@@ -2,22 +2,22 @@ import { BadRequestError } from "@/domain/errors/badRequestError";
 import { RequestTimeoutError } from "@/domain/errors/requestTimeout";
 import { UnauthorizedError } from "@/domain/errors/unathorizedError";
 import { UnexpectedError } from "@/domain/errors/unexpectedError";
-import { DomainAuthenticationToken } from "@/domain/models/authentication-token";
 import { Authentication } from "@/domain/usecases/remote/remote-authentication";
 import {
   HttpErrorResponse,
   HttpClient,
   HttpStatusCode,
 } from "@/data/protocols/http/http-client";
+import { DomainAuthenticationReturn } from "@/domain/models/user";
 
 export class RemoteAuthentication implements Authentication {
   constructor(
-    private readonly HttpClient: HttpClient<DomainAuthenticationToken, HttpErrorResponse>
+    private readonly HttpClient: HttpClient<DomainAuthenticationReturn, HttpErrorResponse>
   ) {}
 
   async requestAuth(
     params: Authentication.Params
-  ): Promise<DomainAuthenticationToken> {
+  ): Promise<DomainAuthenticationReturn> {
     const httpResponse = await this.HttpClient.request({
       url: "/auth/login",
       method: "post",

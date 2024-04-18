@@ -20,7 +20,7 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
 
   return (
     <div className="container mx-auto flex flex-col pt-md-5 pb-md-5 py-2 gap-6">
-      <h1 className="text-3xl text-info font-weight-bold">
+      <h1 className="text-3xl text-info font-weight-bold" data-testid="PageTitle">
         {params ? "Alterar Produto" : "Cadastrar Produto"}
       </h1>
 
@@ -68,8 +68,9 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
             <select
               className="form-select shadow-light p-2 font-size sm border"
               {...register('status', { valueAsNumber: true })}
+              defaultValue={"DEFAULT"}
             >
-              <option selected>Selecione uma opção</option>
+              <option  value="DEFAULT" disabled>Selecione uma opção</option>
               {
                 options.map((o, i) => (
                   <option value={o.value} key={i}>{o.label}</option>

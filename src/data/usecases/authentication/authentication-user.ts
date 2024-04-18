@@ -1,4 +1,4 @@
-import { DomainAuthenticationToken } from "@/domain/models/authentication-token";
+import { DomainAuthenticationReturn } from "@/domain/models/user";
 import { Authentication } from "@/domain/usecases/remote/remote-authentication";
 
 export class AuthenticationUserService implements Authentication {
@@ -6,7 +6,7 @@ export class AuthenticationUserService implements Authentication {
 
   async requestAuth(
     params: Authentication.Params
-  ): Promise<DomainAuthenticationToken> {
+  ): Promise<DomainAuthenticationReturn> {
     const authUser = this.remoteAuthentication.requestAuth(params);
 
     return authUser;

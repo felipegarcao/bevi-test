@@ -1,10 +1,9 @@
-import { DomainUser } from "@/domain/models/user";
-import { DomainAuthenticationToken } from "@/domain/models/authentication-token";
+import { DomainAuthenticationReturn, DomainUser } from "@/domain/models/user";
 
 export interface Authentication {
   requestAuth(
     params: Authentication.Params
-  ): Promise<DomainAuthenticationToken>;
+  ): Promise<DomainAuthenticationReturn>;
 }
 
 export namespace Authentication {
