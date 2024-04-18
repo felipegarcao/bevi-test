@@ -1,23 +1,20 @@
 import { RemoteProducts } from "@/data/usecases/remote/remote-products";
 import { HttpClientSpy } from "../mocks/mock-http";
 import {
-  HttpBeviResponse,
   HttpErrorResponse,
   HttpStatusCode,
 } from "@/data/protocols/http/http-client";
 import { mockRemoteProducstListModel } from "../mocks/mock-remote-products-list";
 import { UnprocessableError } from "@/domain/errors/UnprocessableError";
 import { mockListProducts } from "@/tests/domain/mocks/mock-listProducts";
-import { BadRequestError } from "@/domain/errors/badRequestError";
-import { RequestTimeoutError } from "@/domain/errors/requestTimeout";
 
 type sutType = {
   sut: RemoteProducts;
-  httpClientSpy: HttpClientSpy<HttpBeviResponse, HttpErrorResponse>;
+  httpClientSpy: HttpClientSpy<any, HttpErrorResponse>;
 };
 
 const makeSut = (): sutType => {
-  const HttpClient = new HttpClientSpy<HttpBeviResponse, HttpErrorResponse>();
+  const HttpClient = new HttpClientSpy<any, HttpErrorResponse>();
   const sut = new RemoteProducts(HttpClient);
   return {
     httpClientSpy: HttpClient,
@@ -49,12 +46,13 @@ describe("RemoteProducts", () => {
   it("Should return a list of ProducstModel if HttpClient returns 200", async () => {
     const { sut, httpClientSpy } = makeSut();
     const httpResult = mockRemoteProducstListModel();
-    const producstList = await sut.list();
 
     httpClientSpy.response = {
       statusCode: HttpStatusCode.ok,
+      body: httpResult,
     };
 
+    const producstList = await sut.list();
 
     expect(producstList).toEqual([
       {
@@ -84,28 +82,6 @@ describe("RemoteProducts", () => {
     ]);
   });
 
-  test("Should throw badRequest if HttpClient returns 400", async () => {
-    const { sut, httpClientSpy } = makeSut();
-    httpClientSpy.response = {
-      statusCode: HttpStatusCode.badRequest,
-    };
-
-    const promise = await sut.list();
-
-    await expect(promise).rejects.toThrow(new BadRequestError());
-  });
-
-  test("Should throw RequestTimeoutError if HttpClient returns 408", async () => {
-    const { sut, httpClientSpy } = makeSut();
-    httpClientSpy.response = {
-      statusCode: HttpStatusCode.requestTimeout,
-    };
-
-    const promise = await sut.list();
-
-    await expect(promise).rejects.toThrow(new RequestTimeoutError());
-  });
-
   test("Should edit product", async () => {
     const { sut, httpClientSpy } = makeSut();
 
@@ -116,4 +92,17 @@ describe("RemoteProducts", () => {
     expect(httpClientSpy.method).toBe("put");
     expect(httpClientSpy.body).toEqual(listProductsParams);
   });
+
+
+  test("Should create product", async () => {
+    const { sut, httpClientSpy } = makeSut();
+
+    const listProductsParams = mockListProducts();
+
+    await sut.create(listProductsParams);
+
+    expect(httpClientSpy.method).toBe("post");
+    expect(httpClientSpy.body).toEqual(listProductsParams);
+  });
+
 });

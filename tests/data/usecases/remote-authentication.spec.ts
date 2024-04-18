@@ -82,7 +82,7 @@ describe("RemoteAuthentication", () => {
     );
   });
 
-  test("Should return an Authentication.Model if HttpClient returns 200", async () => {
+  test("Should return an Authentication if HttpClient returns 200", async () => {
     const { sut, httpClientSpy } = makeSutUser();
     const httpResult = mockAuthenticationModel();
     httpClientSpy.response = {
