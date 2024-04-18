@@ -183,6 +183,7 @@ export function useListProductsController({
                   key={index}
                   product={product}
                   handleEditProduct={() => handleEditProduct(product)}
+                  openModalHandleDeleteProduct={() => openModalHandleDeleteProduct(product)}
                 />
               ))
             }

@@ -3,10 +3,14 @@ import { Badge } from "@/presentation/components/Badge";
 import { Props } from "./types";
 import { Edit, Trash } from "lucide-react";
 
+
 export function CardMobile({
   product,
   handleEditProduct,
+  openModalHandleDeleteProduct
 }: Props) {
+
+
   return (
     <div className="shadow-light p-3 my-2 rounded">
       <div className="d-flex flex-column my-2">
@@ -30,6 +34,7 @@ export function CardMobile({
         <button
           className="btn btn-danger col"
           data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+          onClick={() => openModalHandleDeleteProduct(product)}
         >
           <Trash size={16} />
         </button>
