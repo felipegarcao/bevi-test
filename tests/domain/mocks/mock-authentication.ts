@@ -18,3 +18,11 @@ export const mockAuthenticationModel = (): DomainAuthenticationToken => {
     name: `${faker.person.firstName()} ${faker.person.lastName()}`,
   };
 };
+
+
+export const mockReturnAuthentication = () => ({
+  access_token: faker.string.uuid(),
+    expires_in: faker.number.int(),
+    token_type: faker.string.uuid()
+})
+

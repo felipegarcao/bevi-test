@@ -26,6 +26,17 @@ export const mockRemoteProducstListModel = (): Products.Model[] => ([
   mockRemoteProductsModel()
 ])
 
+
+
+
+export function mockOnHandleDelete(id: number) {
+  console.log("onHandleDelete" + id)
+}
+
+export function mockHandleEditProduct(product: DomainProduct) {
+  console.log("onHandleEditProduct" + product)
+}
+
 export class LoadProductsListSpy implements ProductsList {
 
   callsCounter = 0;
