@@ -1,6 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { userReducerAdapter } from "@/main/adapters/user-reducer-adapter";
 import { LogOut } from "lucide-react";
+import { Button } from "../components/Button";
 
 export function AuthenticationLayout() {
 
@@ -12,7 +13,7 @@ export function AuthenticationLayout() {
       <nav className="navbar navbar-light bg-light">
 
         <div className="container mx-auto">
-          <button className="navbar-brand btn" onClick={() => navigate('/')}>
+          <Button variant="ghost" className="navbar-brand btn" onClick={() => navigate('/')}>
             <img
               src="https://www.bevioficial.com.br/_next/static/media/bevi-default-m.da7ba5cc.svg"
               width="70"
@@ -20,12 +21,12 @@ export function AuthenticationLayout() {
               className="d-inline-block align-top"
               alt=""
             />
-          </button>
+          </Button>
           <div className="d-flex align-items-center gap-2 justify-content-center">
             <span className="d-md-block d-none">Olá, <strong>{user.name}</strong></span>
-            <button className="btn" onClick={logout}>
+            <Button variant="ghost" onClick={logout}>
               <LogOut className="text-danger" />
-            </button>
+            </Button>
           </div>
         </div>
       </nav>

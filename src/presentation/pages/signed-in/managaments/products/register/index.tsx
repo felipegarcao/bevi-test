@@ -19,7 +19,7 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
 
 
   return (
-    <div className="container mx-auto flex flex-col pt-5 pb-5 gap-6">
+    <div className="container mx-auto flex flex-col pt-md-5 pb-md-5 py-2 gap-6">
       <h1 className="text-3xl text-info font-weight-bold">
         {params ? "Alterar Produto" : "Cadastrar Produto"}
       </h1>
@@ -79,8 +79,6 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
             {errors.status?.message}
           </label>
         </div>
-
-
 
         <div className="grid align-items-center">
           <label className="w-100 col">

@@ -19,14 +19,14 @@ export const Modal = forwardRef<Ref, Props>((props, ref) => {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id="staticBackdropLabel">Confirmar Exclusão</h5>
-            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <Button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></Button>
           </div>
           <div className="modal-body">
             Deseja realmente excluir o produto {product.name} ?
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-            <Button onClick={() => props.onHandleDelete(product.id)} data-bs-dismiss="modal">Excluir</Button>
+            <Button type="button"  className="text-white" data-bs-dismiss="modal">Fechar</Button>
+            <Button variant="danger" onClick={() => props.onHandleDelete(product.id)} data-bs-dismiss="modal">Excluir</Button>
           </div>
         </div>
       </div>

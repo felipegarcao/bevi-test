@@ -13,6 +13,7 @@ import { useResponsive } from "@/presentation/hooks/useResponsive";
 import { CardMobile } from "./local-components/card-mobile";
 import { formattedBRL } from "@/helpers/formattedBRL";
 import { Ref } from "@/presentation/components/Modal/types";
+import { Button } from "@/presentation/components/Button";
 
 export function useListProductsController({
   service,
@@ -150,21 +151,21 @@ export function useListProductsController({
                       <td className="text-center" date-testid={`stock_quantity-${index}`}>{item.stock_quantity}</td>
                       <td style={{ width: "10%" }}>
                         <div className="d-flex align-items-center gap-2">
-                          <button
-                            className="btn btn-danger"
+                          <Button
+                          variant="danger"
                             data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                             onClick={() => openModalHandleDeleteProduct(item)}
 
                           >
                             <Trash size={16} />
-                          </button>
+                          </Button>
 
-                          <button
-                            className="btn btn-light"
+                          <Button
+                            variant="light"
                             onClick={() => handleEditProduct(item)}
                           >
                             <Edit size={16} />
-                          </button>
+                          </Button>
                         </div>
                       </td>
                     </tr>

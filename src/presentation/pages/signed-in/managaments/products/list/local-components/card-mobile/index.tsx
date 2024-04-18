@@ -2,6 +2,7 @@ import { formattedBRL } from "@/helpers/formattedBRL";
 import { Badge } from "@/presentation/components/Badge";
 import { Props } from "./types";
 import { Edit, Trash } from "lucide-react";
+import { Button } from "@/presentation/components/Button";
 
 
 export function CardMobile({
@@ -31,20 +32,22 @@ export function CardMobile({
       <Badge status={product.status} />
 
       <div className="gap-2 mt-3 row px-0 mx-0">
-        <button
-          className="btn btn-danger col"
+        <Button
+          variant="danger"
+          className="col"
           data-bs-toggle="modal" data-bs-target="#staticBackdrop"
           onClick={() => openModalHandleDeleteProduct(product)}
         >
           <Trash size={16} />
-        </button>
+        </Button>
 
-        <button
-          className="btn btn-light col"
+        <Button
+          className="col"
+          variant="light"
           onClick={() => handleEditProduct(product)}
         >
           <Edit size={16} />
-        </button>
+        </Button>
       </div>
     </div>
   )
