@@ -7,6 +7,8 @@ import {
 import { mockRemoteProducstListModel } from "../mocks/mock-remote-products-list";
 import { UnprocessableError } from "@/domain/errors/UnprocessableError";
 import { mockListProducts } from "@/tests/domain/mocks/mock-listProducts";
+import { UnexpectedError } from "@/domain/errors/unexpectedError";
+import { UnauthorizedError } from "@/domain/errors/unathorizedError";
 
 type sutType = {
   sut: RemoteProducts;
@@ -42,6 +44,39 @@ describe("RemoteProducts", () => {
 
     await expect(promise).rejects.toThrow(new UnprocessableError());
   });
+
+  it('Should throw UnexpectedError if HttpClient returns 404', async () => {
+    const { sut, httpClientSpy } = makeSut()
+    httpClientSpy.response = {
+      statusCode: HttpStatusCode.notFound
+    }
+
+    const promise = sut.list()
+
+    await expect(promise).rejects.toThrow(new UnexpectedError())
+  })
+
+  it('Should throw UnexpectedError if HttpClient returns 500', async () => {
+    const { sut, httpClientSpy } = makeSut()
+    httpClientSpy.response = {
+      statusCode: HttpStatusCode.serverError
+    }
+
+    const promise = sut.list()
+
+    await expect(promise).rejects.toThrow(new UnexpectedError())
+  })
+
+  test('Should throw AccessDeniedError if HttpClient returns 403', async () => {
+    const { sut, httpClientSpy } = makeSut()
+    httpClientSpy.response = {
+      statusCode: HttpStatusCode.unauthorized
+    }
+
+    const promise = sut.list()
+
+    await expect(promise).rejects.toThrow(new UnauthorizedError())
+  })
 
   it("Should return a list of ProducstModel if HttpClient returns 200", async () => {
     const { sut, httpClientSpy } = makeSut();
@@ -82,7 +117,7 @@ describe("RemoteProducts", () => {
     ]);
   });
 
-  test("Should edit product", async () => {
+  it("Should edit product", async () => {
     const { sut, httpClientSpy } = makeSut();
 
     const listProductsParams = mockListProducts();
@@ -94,7 +129,7 @@ describe("RemoteProducts", () => {
   });
 
 
-  test("Should create product", async () => {
+  it("Should create product", async () => {
     const { sut, httpClientSpy } = makeSut();
 
     const listProductsParams = mockListProducts();
@@ -104,5 +139,6 @@ describe("RemoteProducts", () => {
     expect(httpClientSpy.method).toBe("post");
     expect(httpClientSpy.body).toEqual(listProductsParams);
   });
+
 
 });
