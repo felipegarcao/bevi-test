@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useListProductsControllerDI } from "./types";
 import { Products } from "@/domain/usecases/remote/remote-products";
 import { UnauthorizedError } from "@/domain/errors/unathorizedError";
@@ -12,6 +12,7 @@ import { Badge } from "@/presentation/components/Badge";
 import { useResponsive } from "@/presentation/hooks/useResponsive";
 import { CardMobile } from "./local-components/card-mobile";
 import { formattedBRL } from "@/helpers/formattedBRL";
+import { Ref } from "@/presentation/components/Modal/types";
 
 export function useListProductsController({
   service,
@@ -23,6 +24,7 @@ export function useListProductsController({
   const { logout } = userReducerAdapter();
   const navigate = useNavigate();
   const screenType = useResponsive()
+  const ref = useRef<Ref>(null)
 
   function handleToGoRegisterProduct() {
     navigate("/cadastro");
@@ -36,30 +38,34 @@ export function useListProductsController({
     });
   }
 
+  function openModalHandleDeleteProduct(product: Products.Model) {
+    ref.current?.openModal(product)
+  }
+
   const searchProducts = useMemo(() => {
-      const productsFiltered = products?.filter((value) => {
-        if (
-          value.name
-            ?.toLocaleLowerCase()
-            .includes(search.toLocaleLowerCase()) ||
-          value.price
-            ?.toString()
-            .toLocaleLowerCase()
-            .includes(search.toLocaleLowerCase())
-        ) {
-          return value;
-        }
-      });
-      return productsFiltered;    
+    const productsFiltered = products?.filter((value) => {
+      if (
+        value.name
+          ?.toLocaleLowerCase()
+          .includes(search.toLocaleLowerCase()) ||
+        value.price
+          ?.toString()
+          .toLocaleLowerCase()
+          .includes(search.toLocaleLowerCase())
+      ) {
+        return value;
+      }
+    });
+    return productsFiltered;
   }, [search, products]);
 
   async function getProducts() {
     setLoading(true);
 
     try {
-      const products = await service.list();
+      const { data } = await service.list();
 
-      setProducts(products);
+      setProducts(data);
     } catch (error) {
       setError(error.message);
       if (error instanceof UnauthorizedError) {
@@ -147,6 +153,8 @@ export function useListProductsController({
                           <button
                             className="btn btn-danger"
                             data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                            onClick={() => openModalHandleDeleteProduct(item)}
+
                           >
                             <Trash size={16} />
                           </button>
@@ -171,11 +179,11 @@ export function useListProductsController({
           <div>
             {
               searchProducts.map((product, index) => (
-                <CardMobile 
-                  key={index} 
+                <CardMobile
+                  key={index}
                   product={product}
                   handleEditProduct={() => handleEditProduct(product)}
-                 />
+                />
               ))
             }
           </div>
@@ -198,5 +206,6 @@ export function useListProductsController({
     handleEditProduct,
     onHandleDelete,
     content,
+    ref
   };
 }

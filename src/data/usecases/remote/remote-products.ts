@@ -6,7 +6,6 @@ import { UnprocessableError } from "@/domain/errors/UnprocessableError";
 import { DomainProduct } from "@/domain/models/product";
 import { Products } from "@/domain/usecases/remote/remote-products";
 import {
-  HttpBeviResponse,
   HttpErrorResponse,
   HttpClient,
   HttpStatusCode,
@@ -15,7 +14,7 @@ import {
 export class RemoteProducts implements Products {
   constructor(
     private readonly HttpClient: HttpClient<
-      HttpBeviResponse,
+      any,
       HttpErrorResponse
     >
   ) {}
@@ -44,7 +43,7 @@ export class RemoteProducts implements Products {
     }
   }
 
-  async list(): Promise<DomainProduct[]> {
+  async list(): Promise<Products.ModelListWithData> {
     const httpResponse = await this.HttpClient.request({
       url: "/product/list",
       method: "post",
@@ -52,7 +51,7 @@ export class RemoteProducts implements Products {
 
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
-        return httpResponse.body?.data;
+        return httpResponse.body;
       case HttpStatusCode.unauthorized:
         throw new UnauthorizedError();
       case HttpStatusCode.requestTimeout:
@@ -75,7 +74,7 @@ export class RemoteProducts implements Products {
 
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
-        return httpResponse.body.data;
+        return httpResponse.body;
       case HttpStatusCode.unauthorized:
         throw new UnauthorizedError();
       case HttpStatusCode.requestTimeout:
@@ -89,7 +88,7 @@ export class RemoteProducts implements Products {
     }
   }
 
-  async delete(params: Products.ParamsId): Promise<Products.Model[]> {
+  async delete(params: Products.ParamsId): Promise<Products.Model> {
     const httpResponse = await this.HttpClient.request({
       url: "/product/delete",
       method: "delete",
@@ -98,7 +97,7 @@ export class RemoteProducts implements Products {
 
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
-        return httpResponse.body.data;
+        return httpResponse.body;
       case HttpStatusCode.unauthorized:
         throw new UnauthorizedError();
       case HttpStatusCode.requestTimeout:

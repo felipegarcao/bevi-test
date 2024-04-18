@@ -12,13 +12,12 @@ export function ListProducts({ service }: useListProductsControllerDI) {
   const {
     setSearch,
     handleToGoRegisterProduct,
-
+    onHandleDelete,
     content,
+    ref
   } = useListProductsController({
     service,
   });
-
-
 
   return (
     <div className="container mx-auto flex flex-col pt-md-5 pt-3 pb-md-5 gap-6">
@@ -49,9 +48,7 @@ export function ListProducts({ service }: useListProductsControllerDI) {
 
       {content}
 
-      <Modal />
-
-   
+      <Modal onHandleDelete={onHandleDelete} ref={ref} />
     </div>
   );
 }
