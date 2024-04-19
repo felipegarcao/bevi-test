@@ -12,7 +12,7 @@ export function WatchVerifyExpiresToken({ children }: PropsWithChildren) {
 
   const { logout } = userReducerAdapter();
 
-  if (!!token) {
+  if (token) {
     if (verifyExpiresToken(new Date(expires_token))) {
       logout();
     }

@@ -11,33 +11,57 @@ import { MemoryRouter } from "react-router-dom";
 import { LocalStorageCache } from "@/infra/storage/local-storage";
 import { RemoteUser } from "@/data/usecases/remote/remote-user";
 import { HttpClientSpy } from "@/tests/data/mocks/mock-http";
+import { DomainAuthenticationReturn, DomainUser } from "@/domain/models/user";
 
 
-// declarando que a resposta pode ser qualquer coisa, por que vão ser dois tipos de response 
-const makeSut = () => {
-  const httpClient = new HttpClientSpy<
-    any,
-    HttpErrorResponse
-  >();
-  const remoteAuthentication = new RemoteAuthentication(httpClient);
-  const remoteUserData = new RemoteUser(httpClient)
-  const service = new AuthenticationUserService(remoteAuthentication);
-  const storage = new LocalStorageCache()
-  return (
-    <Provider store={store}>
-      <MemoryRouter>
-        <Login
-          remoteAuthentication={service}
-          remoteUserData={remoteUserData}
-          storage={storage} />
-      </MemoryRouter>
-    </Provider>
-  );
+
+
+type sutTypeUser = {
+  sutUser: RemoteUser;
+  httpClientUserSpy: HttpClientSpy<DomainUser>
+}
+
+const makeSutUser = (): sutTypeUser => {
+  const HttpClient = new HttpClientSpy<DomainUser>();
+  const sutUser = new RemoteUser(HttpClient);
+  return {
+    httpClientUserSpy: HttpClient,
+    sutUser,
+  };
 };
+
+type sutType = {
+  sutAuthentication: RemoteAuthentication;
+  httpClientSpy: HttpClientSpy<DomainAuthenticationReturn, HttpErrorResponse>;
+}
+
+const makeSut = (): sutType => {
+  const HttpClient = new HttpClientSpy<DomainAuthenticationReturn, HttpErrorResponse>();
+  const sutAuthentication = new RemoteAuthentication(HttpClient);
+  return {
+    httpClientSpy: HttpClient,
+    sutAuthentication,
+  };
+};
+
 
 describe("Login Screen", () => {
   test("Should render screen correctly without error", () => {
-    render(makeSut());
+    const { sutUser } = makeSutUser()
+    const { sutAuthentication } = makeSut()
+    const storage = new LocalStorageCache()
+    const serviceAuthentication = new AuthenticationUserService(sutAuthentication);
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <Login
+            remoteAuthentication={serviceAuthentication}
+            remoteUserData={sutUser}
+            storage={storage} />
+        </MemoryRouter>
+      </Provider>
+    );
   })
 
 });

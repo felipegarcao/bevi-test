@@ -64,7 +64,7 @@ export function useListProductsController({
     setLoading(true);
 
     try {
-      const { data } = await service.list();
+      const {data} = await service.list();
 
       setProducts(data);
     } catch (error) {

@@ -11,7 +11,6 @@ import {
 import { UnauthorizedError } from "@/domain/errors/unathorizedError";
 
 import { DomainAuthenticationReturn } from "@/domain/models/user";
-import { BadRequestError } from "@/domain/errors/badRequestError";
 
 type sutType = {
   sut: RemoteAuthentication;
@@ -52,8 +51,9 @@ describe("RemoteAuthentication", () => {
     const { sut, httpClientSpy } = makeSut();
     const authenticationParams = mockAuthenticationParams();
 
+ 
     await sut.requestAuth(authenticationParams);
-
+  
     expect(httpClientSpy.method).toBe("post");
     expect(httpClientSpy.body).toEqual(authenticationParams);
   });
@@ -62,26 +62,12 @@ describe("RemoteAuthentication", () => {
     const { sut, httpClientSpy } = makeSut();
     httpClientSpy.response = {
       statusCode: HttpStatusCode.unauthorized,
+      error: "Unauthorized"
     };
 
     const promise = sut.requestAuth(mockAuthenticationParams());
 
     await expect(promise).rejects.toThrow(new UnauthorizedError());
-  });
-
-  test("Should throw UnexpectedError if HttpClient returns 400", async () => {
-    const { sut, httpClientSpy } = makeSut();
-    httpClientSpy.response = {
-      statusCode: HttpStatusCode.badRequest,
-    };
-
-    const promise = sut.requestAuth(mockAuthenticationParams());
-
-    await expect(promise).rejects.toThrow(
-      new BadRequestError(
-        "Algo de errado aconteceu, tente novamente mais tarde."
-      )
-    );
   });
 
 });

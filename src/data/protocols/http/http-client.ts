@@ -11,6 +11,7 @@ export type HttpRequest = {
     [key: string]: string
   }
 
+
 }
 
 type ResponseType = 'blob' | 'arraybuffer' | 'document' | 'json' | 'stream' | 'text'
@@ -20,6 +21,7 @@ export type HttpResponse<R = any, T = any> = {
   body?: R
   headers?: any
   error?: T
+ 
 }
 
 
@@ -34,17 +36,17 @@ export type HttpError = {
   id: string;
   key: string;
   value: string;
+  
 }
 
 export type HttpBeviResponse<R = any> = {
   success: boolean;
   status: number;
   data?: R
-  messages?: any;
   message?: any;
-  access_token: string;
-
 }
+
+
 
 export type HttpMethod = 'post' | 'get' | 'put' | 'delete'
 

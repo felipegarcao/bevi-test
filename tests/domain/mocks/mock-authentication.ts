@@ -1,4 +1,4 @@
-import { DomainAuthenticationToken } from "@/domain/models/authentication-token";
+import { DomainUser } from "@/domain/models/user";
 import { Authentication } from "@/domain/usecases/remote/remote-authentication";
 import { faker } from "@faker-js/faker";
 
@@ -9,13 +9,15 @@ export const mockAuthenticationParams = (): Authentication.Params => {
   };
 };
 
-export const mockAuthenticationModel = (): DomainAuthenticationToken => {
+export const mockAuthenticationModel = (): DomainUser => {
   return {
     id: faker.number.int(),
     email: faker.internet.email(),
-    access_token: faker.string.uuid(),
     email_verified_at: null,
     name: `${faker.person.firstName()} ${faker.person.lastName()}`,
+    created_at: faker.date.anytime().toString(),
+    updated_at: faker.date.anytime().toString(),
+
   };
 };
 

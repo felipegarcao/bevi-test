@@ -70,7 +70,7 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
               {...register('status', { valueAsNumber: true })}
               defaultValue={"DEFAULT"}
             >
-              <option  value="DEFAULT" disabled>Selecione uma opção</option>
+              <option value="DEFAULT" disabled>Selecione uma opção</option>
               {
                 options.map((o, i) => (
                   <option value={o.value} key={i}>{o.label}</option>

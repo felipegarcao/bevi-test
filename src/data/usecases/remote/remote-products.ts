@@ -15,7 +15,8 @@ export class RemoteProducts implements Products {
   constructor(
     private readonly HttpClient: HttpClient<
       any,
-      HttpErrorResponse
+        HttpErrorResponse
+
     >
   ) {}
 
@@ -37,7 +38,7 @@ export class RemoteProducts implements Products {
       case HttpStatusCode.badRequest:
         throw new BadRequestError();
       case HttpStatusCode.Unprocessable:
-        throw new UnprocessableError(httpResponse.body?.message);
+        throw new UnprocessableError();
       default:
         throw new UnexpectedError();
     }
@@ -59,7 +60,7 @@ export class RemoteProducts implements Products {
       case HttpStatusCode.badRequest:
         throw new BadRequestError();
       case HttpStatusCode.Unprocessable:
-        throw new UnprocessableError(httpResponse.body?.message);
+        throw new UnprocessableError("Não há produtos a serem listados.");
       default:
         throw new UnexpectedError();
     }
@@ -80,9 +81,9 @@ export class RemoteProducts implements Products {
       case HttpStatusCode.requestTimeout:
         throw new RequestTimeoutError();
       case HttpStatusCode.badRequest:
-        throw new BadRequestError(httpResponse.body?.message);
+        throw new BadRequestError();
       case HttpStatusCode.Unprocessable:
-        throw new UnprocessableError(httpResponse.body?.message);
+        throw new UnprocessableError();
       default:
         throw new UnexpectedError();
     }
@@ -103,9 +104,9 @@ export class RemoteProducts implements Products {
       case HttpStatusCode.requestTimeout:
         throw new RequestTimeoutError();
       case HttpStatusCode.badRequest:
-        throw new BadRequestError(httpResponse.body?.message);
+        throw new BadRequestError();
       case HttpStatusCode.Unprocessable:
-        throw new UnprocessableError(httpResponse.body?.message);
+        throw new UnprocessableError();
       default:
         throw new UnexpectedError();
     }
