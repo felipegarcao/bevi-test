@@ -17,7 +17,7 @@ export function Login({
     form: {
       register,
       handleSubmit,
-      formState: { isSubmitting },
+      formState: { isSubmitting, errors },
     },
   } = useLoginController({
     remoteAuthentication,
@@ -47,10 +47,10 @@ export function Login({
           <span>Bem-vindo(a) ao Portal de Produtos da Bevi.</span>
 
           <form
-            className="d-flex flex-column gap-5 mt-5"
+            className="d-flex flex-column mt-5"
             onSubmit={handleSubmit(onHandleLogin)}
           >
-            <Input.Root>
+            <Input.Root error={errors.email?.message}>
               <Input.Control
                 type="email"
                 placeholder="Usuario"
@@ -58,7 +58,7 @@ export function Login({
               />
             </Input.Root>
 
-            <Input.Root>
+            <Input.Root error={errors.password?.message} className="mt-5">
               <Input.Control
                 type={visibilePassword ? "password" : "text"}
                 placeholder="Senha"
@@ -71,7 +71,7 @@ export function Login({
               </Input.Prefix>
             </Input.Root>
 
-            <Button loading={isSubmitting}>
+            <Button loading={isSubmitting} className="mt-5">
               <span>Efetuar Login</span>
             </Button>
           </form>

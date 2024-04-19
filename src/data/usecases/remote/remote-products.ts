@@ -15,8 +15,7 @@ export class RemoteProducts implements Products {
   constructor(
     private readonly HttpClient: HttpClient<
       any,
-        HttpErrorResponse
-
+      HttpErrorResponse
     >
   ) {}
 

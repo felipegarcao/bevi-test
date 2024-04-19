@@ -9,6 +9,7 @@ import { LoginUserBodySchema } from "./validation";
 import { DomainUser } from "@/domain/models/user";
 import { toast } from "react-toastify";
 import { calculateExpirationTime } from "@/presentation/helpers/verifyDate";
+import { UnauthorizedError } from "@/domain/errors/unathorizedError";
 
 export function useLoginController({
   remoteAuthentication,
@@ -46,7 +47,11 @@ export function useLoginController({
 
       setUser(user);
     } catch (error) {
-      toast.error(error);
+      if (error instanceof UnauthorizedError) {
+        toast.error("Credenciais inválidas. Por favor, verifique e tente novamente.")
+
+        form.reset()
+      }
     }
   };
 
