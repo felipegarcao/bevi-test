@@ -3,15 +3,25 @@ import * as InputBase from '@/presentation/components/Input'
 import { render, fireEvent, screen } from '@testing-library/react'
 import {faker} from '@faker-js/faker'
 
-const makeSut = (fieldName: string): void => {
+const makeSut = (fieldName: string, error?: string): void => {
   render(
-    <InputBase.Root>
+    <InputBase.Root error={error}>
       <InputBase.Control name={fieldName} />
     </InputBase.Root>
   )
 }
 
 describe('Input Component', () => {
+
+  test('Should leave the input invalid when you have an error', () => {
+    const field = faker.database.column()
+    makeSut(field, 'Input Invalido')
+    
+    const input = screen.getByTestId('invalid')
+
+    expect(input).toBeInTheDocument()
+  })
+
   test('Should begin with readOnly', () => {
     const field = faker.database.column()
     makeSut(field)

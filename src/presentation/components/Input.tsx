@@ -35,15 +35,14 @@ export type InputRootProps = ComponentProps<"div"> & {
 };
 
 export const Root = forwardRef<HTMLDivElement, InputRootProps>(
-  ({ error, name, className,  ...props }, ref) => {
+  ({ error, className,  ...props }, ref) => {
     return (
       <>
         <div
           ref={ref}
           className={`input-group d-flex w-full align-items-center gap-2  border border-zinc-300 px-3 py-2 shadow-light rounded ${className}`}
           {...props}
-          data-testid={`${name}-wrap`}
-          data-status={error ? "invalid" : "valid"}
+          data-testid={error ? "invalid" : "valid"}
         />
 
         {error && (

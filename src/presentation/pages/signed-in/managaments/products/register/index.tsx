@@ -19,7 +19,6 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
   } = useRegisterProductController({ service })
 
 
-  console.log(errors)
 
 
   return (

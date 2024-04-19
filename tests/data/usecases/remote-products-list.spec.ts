@@ -72,7 +72,6 @@ describe("RemoteProducts", () => {
     expect(httpClientSpy.method).toBe("post");
   });
 
-  
   it("Should return an empty list if HttpClient returns 422", async () => {
     const { httpClientSpy, sut } = makeSut();
 
@@ -93,7 +92,6 @@ describe("RemoteProducts", () => {
       new UnprocessableError(httpClientSpy.response.body.message)
     );
   });
-
 
   // edit
 
@@ -117,6 +115,30 @@ describe("RemoteProducts", () => {
     expect(httpClientSpy.body).toEqual(listProductsParams);
     expect(httpClientSpy.response.body).toEqual(response);
   });
+
+  it("Should updated product with error 422", async () => {
+    const { sut, httpClientSpy } = makeSut();
+    const listProductsParams = mockListProducts();
+
+    const errorMessage = "Os dados fornecidos são inválidos."
+
+    httpClientSpy.response = {
+      statusCode: HttpStatusCode.Unprocessable,
+      body: {
+        success: false,
+        status: HttpStatusCode.Unprocessable,
+        message: errorMessage,
+        data: []
+      },
+    };
+
+
+    const promise = sut.updated(listProductsParams);
+
+    await expect(promise).rejects.toThrow(new UnprocessableError());
+
+
+  })
 
   // create
 
