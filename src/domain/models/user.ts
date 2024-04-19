@@ -5,6 +5,7 @@ export type DomainUser = {
   email_verified_at: boolean,
   created_at?: string;
   updated_at?: string;
+  expires_token?: Date;
 }
 
 

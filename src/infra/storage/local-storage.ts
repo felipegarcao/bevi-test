@@ -10,7 +10,7 @@ export class LocalStorageCache<R = any> implements GetStorage<R>, SetStorage{
   }
 
   get (key: string): R {
-    return JSON.parse(localStorage.getItem(key) ?? '')
+    return JSON.parse(localStorage.getItem(key))
   }
 
 }

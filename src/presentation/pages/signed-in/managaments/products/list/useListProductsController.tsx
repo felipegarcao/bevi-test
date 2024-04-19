@@ -11,7 +11,7 @@ import { Edit, Trash } from "lucide-react";
 import { Badge } from "@/presentation/components/Badge";
 import { useResponsive } from "@/presentation/hooks/useResponsive";
 import { CardMobile } from "./local-components/card-mobile";
-import { formattedBRL } from "@/helpers/formattedBRL";
+import { formattedBRL } from "@/presentation/helpers/formattedBRL";
 import { Ref } from "@/presentation/components/Modal/types";
 import { Button } from "@/presentation/components/Button";
 

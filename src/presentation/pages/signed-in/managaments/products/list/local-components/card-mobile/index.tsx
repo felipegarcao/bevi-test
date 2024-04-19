@@ -1,4 +1,4 @@
-import { formattedBRL } from "@/helpers/formattedBRL";
+import { formattedBRL } from "@/presentation/helpers/formattedBRL";
 import { Badge } from "@/presentation/components/Badge";
 import { Props } from "./types";
 import { Edit, Trash } from "lucide-react";
