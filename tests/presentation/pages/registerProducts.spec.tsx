@@ -15,15 +15,15 @@ const MakeSut = (product?: DomainProduct) => {
   return (
     <Provider store={store}>
       <MemoryRouter initialEntries={[{ pathname: '/cadastro', state: !!product && { product } }]}>
-          <RegisterProducts service={remote} />
+        <RegisterProducts service={remote} />
       </MemoryRouter>
     </Provider>
-
-
   )
 }
 
 describe('Register Screen', () => {
+
+   // Functionality tests are in usecase
 
   test('Should render product register form with no receive product from params', () => {
     const { getByTestId } = render(MakeSut())

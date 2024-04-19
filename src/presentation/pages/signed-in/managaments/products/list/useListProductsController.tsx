@@ -64,7 +64,7 @@ export function useListProductsController({
     setLoading(true);
 
     try {
-      const {data} = await service.list();
+      const { data } = await service.list();
 
       setProducts(data);
     } catch (error) {
@@ -85,13 +85,19 @@ export function useListProductsController({
   async function onHandleDelete(id: number) {
     setLoading(true);
     try {
-      await service.delete({
-        id,
-      });
+      const { data, message } = await service.delete({ id});
 
-      toast.info("Produto deletado com sucesso.");
 
-      getProducts();
+
+      if (products.length > 0) {
+        const saveWithoutDeleteProduct = products.filter((product) => product.id !== data.id)
+        setProducts(saveWithoutDeleteProduct)
+      }
+
+      getProducts()
+
+
+      toast.info(message);
 
       navigate("/");
     } catch (error) {
@@ -152,7 +158,7 @@ export function useListProductsController({
                       <td style={{ width: "10%" }}>
                         <div className="d-flex align-items-center gap-2">
                           <Button
-                          variant="danger"
+                            variant="danger"
                             data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                             onClick={() => openModalHandleDeleteProduct(item)}
 
@@ -194,7 +200,7 @@ export function useListProductsController({
     }
 
 
-  }, [products, search, loading, error, screenType, searchProducts]);
+  }, [loading, error, products.length, screenType, searchProducts, handleEditProduct]);
 
   useEffect(() => {
     getProducts();

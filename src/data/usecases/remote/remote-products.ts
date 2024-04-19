@@ -30,7 +30,7 @@ export class RemoteProducts implements Products {
     
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
-        return httpResponse.body?.data;
+        return httpResponse.body;
       case HttpStatusCode.unauthorized:
         throw new UnauthorizedError();
       case HttpStatusCode.requestTimeout:

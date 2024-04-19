@@ -51,9 +51,8 @@ describe("RemoteAuthentication", () => {
     const { sut, httpClientSpy } = makeSut();
     const authenticationParams = mockAuthenticationParams();
 
- 
     await sut.requestAuth(authenticationParams);
-  
+
     expect(httpClientSpy.method).toBe("post");
     expect(httpClientSpy.body).toEqual(authenticationParams);
   });
@@ -62,12 +61,11 @@ describe("RemoteAuthentication", () => {
     const { sut, httpClientSpy } = makeSut();
     httpClientSpy.response = {
       statusCode: HttpStatusCode.unauthorized,
-      error: "Unauthorized"
+      error: "Unauthorized",
     };
 
     const promise = sut.requestAuth(mockAuthenticationParams());
 
     await expect(promise).rejects.toThrow(new UnauthorizedError());
   });
-
 });

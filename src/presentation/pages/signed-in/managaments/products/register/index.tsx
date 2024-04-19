@@ -7,6 +7,7 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
 
   const {
     onHandleRegisterProduct,
+    loading,
     form: {
       register,
       handleSubmit,
@@ -16,6 +17,9 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
     params,
     options,
   } = useRegisterProductController({ service })
+
+
+  console.log(errors)
 
 
   return (
@@ -54,10 +58,10 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
             <Input.Root error={errors.price?.message}>
               <Input.Control
 
-
+    min={0}
                 type="number"
                 {...register('price', {
-                  valueAsNumber: true
+                  valueAsNumber: true,
                 })}
               />
             </Input.Root>
@@ -98,7 +102,7 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
           </label>
         </div>
 
-        <Button className="mt-4 col" type="submit" loading={isSubmitting}>
+        <Button className="mt-4 col" type="submit" disabled={loading || isSubmitting}>
           <span> {params ? 'Alterar' : 'Cadastrar'}</span>
         </Button>
 

@@ -15,3 +15,10 @@ export const mockListProducts = () : Products.Model => ({
   status: faker.helpers.enumValue(STATUS),
   stock_quantity: faker.number.int(),
 })
+
+
+export const mockErrorDeleteProduct = () => ({
+  success: false,
+  code: 422,
+  message: "Não foi possível deletar produto."
+})

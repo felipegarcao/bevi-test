@@ -25,7 +25,7 @@ export const Modal = forwardRef<Ref, Props>((props, ref) => {
             Deseja realmente excluir o produto {product.name} ?
           </div>
           <div className="modal-footer">
-            <Button type="button"  className="text-white" data-bs-dismiss="modal">Fechar</Button>
+            <Button type="button" className="text-white" data-bs-dismiss="modal">Fechar</Button>
             <Button variant="danger" onClick={() => props.onHandleDelete(product.id)} data-bs-dismiss="modal">Excluir</Button>
           </div>
         </div>

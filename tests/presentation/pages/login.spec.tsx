@@ -46,6 +46,9 @@ const makeSut = (): sutType => {
 
 
 describe("Login Screen", () => {
+
+  //  Functionality tests are in usecase
+  
   test("Should render screen correctly without error", () => {
     const { sutUser } = makeSutUser()
     const { sutAuthentication } = makeSut()
@@ -63,5 +66,6 @@ describe("Login Screen", () => {
       </Provider>
     );
   })
+
 
 });

@@ -4,12 +4,10 @@ import { Header } from "../components/Header";
 
 export function AuthenticationLayout() {
 
-
-
   return (
     <>
-    <Header />
-      
+      <Header />
+
       <main className="container-app">
         <Outlet />
       </main>

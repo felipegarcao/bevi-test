@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     </PersistStore>
 
     <ToastContainer
-      limit={1}
+      limit={3}
       pauseOnFocusLoss={false}
       toastStyle={{
         fontSize: 14,

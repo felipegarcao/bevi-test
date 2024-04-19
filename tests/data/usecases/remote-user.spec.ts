@@ -1,4 +1,3 @@
-import { DomainUser } from "@/domain/models/user";
 import { HttpClientSpy } from "../mocks/mock-http";
 import { RemoteUser } from "@/data/usecases/remote/remote-user";
 import { mockAuthenticationModel } from "@/tests/domain/mocks/mock-authentication";
@@ -7,11 +6,11 @@ import { UnexpectedError } from "@/domain/errors/unexpectedError";
 
 type sutTypeUser = {
   sut: RemoteUser;
-  httpClientSpy: HttpClientSpy<DomainUser>;
+  httpClientSpy: HttpClientSpy;
 };
 
 const makeSutUser = (): sutTypeUser => {
-  const HttpClient = new HttpClientSpy<DomainUser>();
+  const HttpClient = new HttpClientSpy();
   const sut = new RemoteUser(HttpClient);
   return {
     httpClientSpy: HttpClient,
@@ -44,6 +43,12 @@ describe("RemoteUser", () => {
     const { sut, httpClientSpy } = makeSutUser();
     httpClientSpy.response = {
       statusCode: HttpStatusCode.notFound,
+      body: {
+        success: false,
+        message: "Route [login] not defined.",
+        code: HttpStatusCode.notFound,
+        data: [],
+      },
     };
 
     const promise = sut.me();

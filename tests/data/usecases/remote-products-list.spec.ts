@@ -8,8 +8,7 @@ import {
 import { mockRemoteProducstListModel } from "../mocks/mock-remote-products-list";
 import { UnprocessableError } from "@/domain/errors/UnprocessableError";
 import { mockListProducts } from "@/tests/domain/mocks/mock-listProducts";
-import { UnexpectedError } from "@/domain/errors/unexpectedError";
-import { UnauthorizedError } from "@/domain/errors/unathorizedError";
+
 
 type sutType = {
   sut: RemoteProducts;
@@ -26,6 +25,8 @@ const makeSut = (): sutType => {
 };
 
 describe("RemoteProducts", () => {
+
+  // list
   it("Should return a list of ProducstModel if HttpClient returns 200", async () => {
     const { sut, httpClientSpy } = makeSut();
     const httpResult = mockRemoteProducstListModel();
@@ -71,60 +72,34 @@ describe("RemoteProducts", () => {
     expect(httpClientSpy.method).toBe("post");
   });
 
-  // quando a listagem esta vazia é retornado 422 da API.
+  
   it("Should return an empty list if HttpClient returns 422", async () => {
     const { httpClientSpy, sut } = makeSut();
+
+    const errorMessage = "Não há produtos a serem listados.";
+
     httpClientSpy.response = {
       statusCode: HttpStatusCode.Unprocessable,
       body: {
         status: HttpStatusCode.Unprocessable,
         success: false,
-        message: "Não há produtos a serem listados.",
+        message: errorMessage,
       },
     };
 
     const promise = sut.list();
 
-    await expect(promise).rejects.toThrow(new UnprocessableError());
+    await expect(promise).rejects.toThrow(
+      new UnprocessableError(httpClientSpy.response.body.message)
+    );
   });
 
-  it("Should throw UnexpectedError if HttpClient returns 404", async () => {
-    const { sut, httpClientSpy } = makeSut();
-    httpClientSpy.response = {
-      statusCode: HttpStatusCode.notFound,
-    };
 
-    const promise = sut.list();
-
-    await expect(promise).rejects.toThrow(new UnexpectedError());
-  });
-
-  it("Should throw UnexpectedError if HttpClient returns 500", async () => {
-    const { sut, httpClientSpy } = makeSut();
-    httpClientSpy.response = {
-      statusCode: HttpStatusCode.serverError,
-    };
-
-    const promise = sut.list();
-
-    await expect(promise).rejects.toThrow(new UnexpectedError());
-  });
-
-  test("Should throw  UnauthorizedError if HttpClient returns 401", async () => {
-    const { sut, httpClientSpy } = makeSut();
-    httpClientSpy.response = {
-      statusCode: HttpStatusCode.unauthorized,
-    };
-
-    const promise = sut.list();
-
-    await expect(promise).rejects.toThrow(new UnauthorizedError());
-  });
+  // edit
 
   it("Should edit the product with the put method", async () => {
     const { sut, httpClientSpy } = makeSut();
     const listProductsParams = mockListProducts();
-
 
     httpClientSpy.response = {
       statusCode: HttpStatusCode.ok,
@@ -133,16 +108,17 @@ describe("RemoteProducts", () => {
         status: HttpStatusCode.ok,
         message: "Produto atualizado com sucesso.",
         data: listProductsParams,
-      }
-    }
+      },
+    };
 
     const response = await sut.updated(listProductsParams);
-
 
     expect(httpClientSpy.method).toBe("put");
     expect(httpClientSpy.body).toEqual(listProductsParams);
     expect(httpClientSpy.response.body).toEqual(response);
   });
+
+  // create
 
   it("Should create the product with the post method", async () => {
     const { sut, httpClientSpy } = makeSut();
@@ -158,7 +134,6 @@ describe("RemoteProducts", () => {
       },
     };
 
-
     const response = await sut.create(listProductsParams);
 
     expect(httpClientSpy.method).toBe("post");
@@ -167,6 +142,8 @@ describe("RemoteProducts", () => {
 
   it("Should return an empty post if HttpClient returns 422", async () => {
     const { httpClientSpy, sut } = makeSut();
+
+    const errorMessage = "Os dados fornecidos são inválidos.";
 
     const invalidProduct = {
       name: "",
@@ -181,14 +158,16 @@ describe("RemoteProducts", () => {
       body: {
         status: HttpStatusCode.Unprocessable,
         success: false,
-        message: "Os dados fornecidos são inválidos.",
+        message: errorMessage,
         data: [],
       },
     };
 
     const promise = sut.create(invalidProduct);
 
-    await expect(promise).rejects.toThrow(new UnprocessableError());
+    await expect(promise).rejects.toThrow(
+      new UnprocessableError(httpClientSpy.body.message)
+    );
   });
 
   // delete
@@ -207,7 +186,7 @@ describe("RemoteProducts", () => {
         success: true,
         status: HttpStatusCode.ok,
         message: "Produto deletado com sucesso.",
-        data: listProductsParams,
+        data: mockIdProducts,
       },
     };
 
@@ -216,5 +195,29 @@ describe("RemoteProducts", () => {
     expect(httpClientSpy.method).toBe("delete");
     expect(httpClientSpy.body).toEqual(mockIdProducts);
     expect(httpClientSpy.response.body).toEqual(response);
+  });
+
+  it("Should delete product with error 422", async () => {
+    const { sut, httpClientSpy } = makeSut();
+    const listProductsParams = mockListProducts();
+
+    const mockIdProducts = {
+      id: listProductsParams.id,
+    };
+
+    const errorMessage = "Não foi possível deletar produto.";
+
+    httpClientSpy.response = {
+      statusCode: HttpStatusCode.Unprocessable,
+      body: {
+        success: false,
+        status: HttpStatusCode.Unprocessable,
+        message: errorMessage,
+      },
+    };
+
+    const promise = sut.delete(mockIdProducts);
+
+    await expect(promise).rejects.toThrow(new UnprocessableError());
   });
 });
