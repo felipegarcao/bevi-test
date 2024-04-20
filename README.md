@@ -1,6 +1,6 @@
 # Sistema de Gerenciamento de Produtos
 
- Desenvolvido com ReactJS, seguindo uma arquitetura bem definida e desacoplada. Utilizamos TDD (Desenvolvimento Orientado a Testes) como metodologia de trabalho e Clean Architecture para distribuição de responsabilidades em camadas, sempre aderindo aos princípios do SOLID, DRY, YAGNI e KISS. Além disso, aplicamos Design Patterns para resolver problemas comuns.
+ Desenvolvido com ReactJS, seguindo uma arquitetura bem definida e desacoplada. Utilizamos TDD (Desenvolvimento Orientado a Testes) como metodologia de trabalho e Clean Architecture para distribuição de responsabilidades em camadas, sempre aderindo aos princípios do SOLID, DRY, YAGNI e KISS. Além disso, aplicando Design Patterns para resolver problemas comuns.
 
 ## Clonando o Projeto
 
