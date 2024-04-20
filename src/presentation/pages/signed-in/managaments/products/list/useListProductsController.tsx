@@ -24,8 +24,8 @@ export function useListProductsController({
   const [search, setSearch] = useState("");
   const { logout } = userReducerAdapter();
   const navigate = useNavigate();
-  const screenType = useResponsive()
-  const ref = useRef<Ref>(null)
+  const screenType = useResponsive();
+  const ref = useRef<Ref>(null);
 
   function handleToGoRegisterProduct() {
     navigate("/cadastro");
@@ -40,15 +40,13 @@ export function useListProductsController({
   }
 
   function openModalHandleDeleteProduct(product: Products.Model) {
-    ref.current?.openModal(product)
+    ref.current?.openModal(product);
   }
 
   const searchProducts = useMemo(() => {
     const productsFiltered = products?.filter((value) => {
       if (
-        value.name
-          ?.toLocaleLowerCase()
-          .includes(search.toLocaleLowerCase()) ||
+        value.name?.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
         value.price
           ?.toString()
           .toLocaleLowerCase()
@@ -85,17 +83,16 @@ export function useListProductsController({
   async function onHandleDelete(id: number) {
     setLoading(true);
     try {
-      const { data, message } = await service.delete({ id});
-
-
+      const { data, message } = await service.delete({ id });
 
       if (products.length > 0) {
-        const saveWithoutDeleteProduct = products.filter((product) => product.id !== data.id)
-        setProducts(saveWithoutDeleteProduct)
+        const saveWithoutDeleteProduct = products.filter(
+          (product) => product.id !== data.id
+        );
+        setProducts(saveWithoutDeleteProduct);
       }
 
-      getProducts()
-
+      getProducts();
 
       toast.info(message);
 
@@ -114,7 +111,8 @@ export function useListProductsController({
       return (
         <div className="shadow-light p-3 rounded mt-5">
           <Loading />
-        </div>);
+        </div>
+      );
     }
 
     if (error) {
@@ -127,16 +125,16 @@ export function useListProductsController({
       );
     }
 
-    if (products.length !== 0 && !error) {
-      if (screenType === 'Desktop') {
+    if (!loading && !error && searchProducts.length > 0) {
+      if (screenType === "Desktop") {
         return (
           <div className="shadow-light p-3 rounded mt-5">
             <div className="table-responsive">
               <table className="table">
                 <thead>
                   <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Preço</th>
+                    <th scope="col">Produto</th>
+                    <th scope="col">Descrição</th>
                     <th scope="col">Status</th>
                     <th scope="col" className="text-center">
                       Estoque
@@ -147,21 +145,38 @@ export function useListProductsController({
                 <tbody>
                   {searchProducts.map((item, index) => (
                     <tr className="align-middle font-size sm" key={index}>
-                      <td className="w-25" data-testid={`name`}>{item.name}</td>
-                      <td data-testid={`price`}>
-                        {formattedBRL(item.price)}
+                      <td style={{width: '15%'}}>
+                        <div className="d-flex flex-column">
+                          <strong data-testid={`name`}>{item.name}</strong>
+                          <span data-testid={`price`}>
+                            {formattedBRL(item.price)}
+                          </span>
+                        </div>
                       </td>
+
+                      <td
+                        data-testid="description"
+                        className="w-75  text-justify"
+                      >
+                        {item.description}
+                      </td>
+
                       <td data-testid={`status`}>
                         <Badge status={item.status} />
                       </td>
-                      <td className="text-center" data-testid={`stock_quantity`}>{item.stock_quantity}</td>
-                      <td style={{ width: "10%" }}>
+                      <td
+                        className="text-center"
+                        data-testid={`stock_quantity`}
+                      >
+                        {item.stock_quantity}
+                      </td>
+                      <td>
                         <div className="d-flex align-items-center gap-2">
                           <Button
                             variant="danger"
-                            data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                            data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop"
                             onClick={() => openModalHandleDeleteProduct(item)}
-
                           >
                             <Trash size={16} />
                           </Button>
@@ -184,23 +199,40 @@ export function useListProductsController({
       } else {
         return (
           <div>
-            {
-              searchProducts.map((product, index) => (
-                <CardMobile
-                  key={index}
-                  product={product}
-                  handleEditProduct={() => handleEditProduct(product)}
-                  openModalHandleDeleteProduct={() => openModalHandleDeleteProduct(product)}
-                />
-              ))
-            }
+            {searchProducts.map((product, index) => (
+              <CardMobile
+                key={index}
+                product={product}
+                handleEditProduct={() => handleEditProduct(product)}
+                openModalHandleDeleteProduct={() =>
+                  openModalHandleDeleteProduct(product)
+                }
+              />
+            ))}
           </div>
-        )
+        );
       }
     }
 
-
-  }, [loading, error, products.length, screenType, searchProducts, handleEditProduct]);
+    if (searchProducts.length === 0) {
+      return (
+        <div className="shadow-light p-3 rounded mt-5">
+          <div className="d-flex flex-column align-items-center justify-content-center gap-2">
+            <span className="font-size sm">
+              Nenhum Produto Pesquisado foi encotrado.
+            </span>
+          </div>
+        </div>
+      );
+    }
+  }, [
+    loading,
+    error,
+    products.length,
+    screenType,
+    searchProducts,
+    handleEditProduct,
+  ]);
 
   useEffect(() => {
     getProducts();
@@ -214,6 +246,6 @@ export function useListProductsController({
     handleEditProduct,
     onHandleDelete,
     content,
-    ref
+    ref,
   };
 }

@@ -69,4 +69,7 @@ describe("Login Screen", () => {
     expect(image).toHaveAttribute("width", "70");
     expect(image).toHaveAttribute("height", "40");
   });
+
+
+  
 });

@@ -15,13 +15,20 @@ export function CardMobile({
   return (
     <div className="shadow-light p-3 my-2 rounded">
       <div className="d-flex flex-column my-2">
+      <div className="d-flex flex-column">
         <strong className="font-size xs">Nome</strong>
         <span className="font-size sm" data-testid="name">{product.name}</span>
+        </div>
+
+        <div className="d-flex flex-column">
+        <span className="font-size sm" data-testid="price">{formattedBRL(product.price)}</span>
+        </div>
+        
       </div>
 
       <div className="d-flex flex-column my-4">
-        <strong className="font-size xs">Preço</strong>
-        <span className="font-size sm" data-testid="price">{formattedBRL(product.price)}</span>
+        <strong className="font-size xs">Descrição</strong>
+        <span className="font-size sm text-justify" data-testid="price">{(product.description)}</span>
       </div>
 
       <div className="d-flex flex-column my-4">

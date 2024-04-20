@@ -12,7 +12,6 @@ import { formattedBRL } from "@/presentation/helpers/formattedBRL";
 describe("ListProducts screen", () => {
 
 
-  // Functionality tests are in usecase
 
   test("Should render ListProducts with correctly values on mobile screen", () => {
     const exportProductsMock = mockRemoteProductsModel();

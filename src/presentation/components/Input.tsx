@@ -40,7 +40,7 @@ export const Root = forwardRef<HTMLDivElement, InputRootProps>(
       <>
         <div
           ref={ref}
-          className={`input-group d-flex w-full align-items-center gap-2  border border-zinc-300 px-3 py-2 shadow-light rounded ${className}`}
+          className={`input-group d-flex w-full align-items-center gap-2  border ${error ? 'border-danger' : ''} px-3 py-2 shadow-light rounded ${className}`}
           {...props}
           data-testid={error ? "invalid" : "valid"}
         />

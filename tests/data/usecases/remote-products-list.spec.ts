@@ -26,7 +26,7 @@ const makeSut = (): sutType => {
 
 describe("RemoteProducts", () => {
 
-  // list
+ 
   it("Should return a list of ProducstModel if HttpClient returns 200", async () => {
     const { sut, httpClientSpy } = makeSut();
     const httpResult = mockRemoteProducstListModel();

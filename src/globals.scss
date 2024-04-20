@@ -59,3 +59,9 @@ body, html, button {
 textarea {
   resize: none;
 }
+
+// o bootstrap não fornece a classe para alinhamento justificado de texto
+
+.text-justify {
+  text-align: justify;
+}
