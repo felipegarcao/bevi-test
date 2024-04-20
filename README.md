@@ -40,7 +40,6 @@ npm install
 A documentação da API está disponível [aqui](https://documenter.getpostman.com/view/12499698/2sA3BkbsqD).
 
 
-
 > ## Princípios
 
 * Single Responsibility Principle (SRP)

@@ -59,9 +59,7 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
               <Input.Control
                 min={0}
                 type="number"
-                {...register('price', {
-                  valueAsNumber: true,
-                })}
+                {...register('price')}
                 data-testid="input-entry-price"
               />
             </Input.Root>
@@ -71,11 +69,12 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
             <span className="font-size sm">Status</span>
             <select
               className="form-select shadow-light p-2 font-size sm border"
-              {...register('status', { valueAsNumber: true })}
-              defaultValue={"DEFAULT"}
+              {...register('status', {
+                valueAsNumber: true
+              })}
               data-testid="input-entry-status"
             >
-              <option value="DEFAULT" disabled>Selecione uma opção</option>
+            
               {
                 options.map((o, i) => (
                   <option value={o.value} key={i}>{o.label}</option>
@@ -94,8 +93,7 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
             <Input.Root error={errors.stock_quantity?.message}>
               <Input.Control
                 type="number"
-                {...register('stock_quantity',
-                  { valueAsNumber: true })}
+                {...register('stock_quantity')}
                 min={0}
                 data-testid="input-entry-stock_quantity"
               />

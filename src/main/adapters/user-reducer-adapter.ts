@@ -6,10 +6,8 @@ import {
   clearCurrentUser,
   setCurrentUser,
 } from "@/infra/redux-store/reducers/authentication-user-reducer";
-import { LocalStorageCache } from "@/infra/storage/local-storage";
 
 export function userReducerAdapter() {
-  const storage = new LocalStorageCache()
   const dispatch = useDispatch();
   const user: DomainUser = useStoreSelector(
     (state) => state.persistedReducers.user
@@ -22,7 +20,7 @@ export function userReducerAdapter() {
 
   function logout() {
     dispatch(clearCurrentUser());
-    storage.set('BeviToken')
+    localStorage.clear()
     navigate("/");
   }
 

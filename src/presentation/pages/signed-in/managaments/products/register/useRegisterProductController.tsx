@@ -23,9 +23,7 @@ export function useRegisterProductController({ service }: useRegisterProductsCon
     defaultValues: {
       description: '',
       name: '',
-      price: 0,
-      status: 1,
-      stock_quantity: 0
+     status: 1
     },
     values: {
       id: params?.id,
@@ -55,9 +53,9 @@ export function useRegisterProductController({ service }: useRegisterProductsCon
       const payload: Products.Model = {
         description: product.description,
         name: product.name,
-        price: Number(product.price),
-        stock_quantity: Number(product.stock_quantity),
-        status: Number(product.status)
+        price:product.price,
+        stock_quantity:product.stock_quantity,
+        status:product.status
       }
 
       if (params) {

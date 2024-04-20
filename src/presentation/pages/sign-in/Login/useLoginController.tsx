@@ -52,6 +52,7 @@ export function useLoginController({
 
         form.reset()
       }
+      toast.error(error.message)
     }
   };
 

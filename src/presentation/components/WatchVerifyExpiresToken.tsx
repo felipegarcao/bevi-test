@@ -2,6 +2,7 @@ import { PropsWithChildren } from "react";
 import { verifyExpiresToken } from "@/presentation/helpers/verifyDate";
 import { userReducerAdapter } from "@/main/adapters/user-reducer-adapter";
 import { LocalStorageCache } from "@/infra/storage/local-storage";
+import { toast } from "react-toastify";
 
 export function WatchVerifyExpiresToken({ children }: PropsWithChildren) {
 
@@ -15,6 +16,7 @@ export function WatchVerifyExpiresToken({ children }: PropsWithChildren) {
   if (token) {
     if (verifyExpiresToken(new Date(expires_token))) {
       logout();
+      toast.error('o seu Token foi expirado ! realize o login novamente.')
     }
   }
 

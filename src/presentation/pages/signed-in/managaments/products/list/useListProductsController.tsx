@@ -153,7 +153,6 @@ export function useListProductsController({
                           </span>
                         </div>
                       </td>
-
                       <td
                         data-testid="description"
                         className="w-75  text-justify"
@@ -198,7 +197,7 @@ export function useListProductsController({
         );
       } else {
         return (
-          <div>
+          <>
             {searchProducts.map((product, index) => (
               <CardMobile
                 key={index}
@@ -209,7 +208,7 @@ export function useListProductsController({
                 }
               />
             ))}
-          </div>
+          </>
         );
       }
     }

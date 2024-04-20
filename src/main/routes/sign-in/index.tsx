@@ -6,7 +6,6 @@ export default function SignInRoutes() {
   return (
     <Routes>
       <Route path="/" element={<MakeLoginScreen />} />
-
     </Routes>
   )
 }
