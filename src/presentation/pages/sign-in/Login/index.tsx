@@ -50,15 +50,20 @@ export function Login({
             className="d-flex flex-column mt-5"
             onSubmit={handleSubmit(onHandleLogin)}
           >
-            <Input.Root error={errors.email?.message}>
-              <Input.Control
-                type="email"
-                placeholder="Usuario"
-                {...register("email")}
-              />
-            </Input.Root>
+            <label data-testid='Email Address'>
+             E-mail
+              <Input.Root error={errors.email?.message}>
+                <Input.Control
+                  type="email"
+                  placeholder="email"
+                  {...register("email")}
+                />
+              </Input.Root>
+            </label>
 
-            <Input.Root error={errors.password?.message} className="mt-5">
+            <label data-testid="Password">
+              Senha
+              <Input.Root error={errors.password?.message} className="mt-5">
               <Input.Control
                 type={visibilePassword ? "password" : "text"}
                 placeholder="Senha"
@@ -70,8 +75,11 @@ export function Login({
                 </span>
               </Input.Prefix>
             </Input.Root>
+            </label>
 
-            <Button loading={isSubmitting} className="mt-5">
+            
+
+            <Button loading={isSubmitting} className="mt-5" role="button">
               <span>Efetuar Login</span>
             </Button>
           </form>

@@ -33,9 +33,9 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
           <span className="font-size sm">Nome do Produto</span>
           <Input.Root error={errors.name?.message}>
             <Input.Control
-
               type="text"
               {...register('name')}
+            data-testid="input-entry-name"
             />
           </Input.Root>
         </label>
@@ -45,6 +45,7 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
           <label htmlFor="textarea" className="font-size sm">Descrição</label>
           <textarea
             className="form-control shadow-light border"
+            data-testid="input-entry-description"
             id="textarea"
             rows={3} {...register('description')}></textarea>
           {errors.description?.message}
@@ -56,12 +57,12 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
 
             <Input.Root error={errors.price?.message}>
               <Input.Control
-
-    min={0}
+                min={0}
                 type="number"
                 {...register('price', {
                   valueAsNumber: true,
                 })}
+                data-testid="input-entry-price"
               />
             </Input.Root>
           </label>
@@ -72,6 +73,7 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
               className="form-select shadow-light p-2 font-size sm border"
               {...register('status', { valueAsNumber: true })}
               defaultValue={"DEFAULT"}
+              data-testid="input-entry-status"
             >
               <option value="DEFAULT" disabled>Selecione uma opção</option>
               {
@@ -95,6 +97,7 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
                 {...register('stock_quantity',
                   { valueAsNumber: true })}
                 min={0}
+                data-testid="input-entry-stock_quantity"
               />
             </Input.Root>
 

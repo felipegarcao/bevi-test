@@ -8,7 +8,6 @@ const initialState: DomainUser = {
   email_verified_at: false,
   updated_at: '',
   created_at: '',
-  expires_token: new Date()
 }
 
 const userSlice = createSlice({

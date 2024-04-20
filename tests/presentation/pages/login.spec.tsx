@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { Login } from "@/presentation/pages/sign-in/Login";
 import { AuthenticationUserService } from "@/data/usecases/authentication/authentication-user";
 import { RemoteAuthentication } from "@/data/usecases/remote/remote-authentication";
@@ -19,39 +19,31 @@ import { DomainAuthenticationReturn, DomainUser } from "@/domain/models/user";
 type sutTypeUser = {
   sutUser: RemoteUser;
   httpClientUserSpy: HttpClientSpy<DomainUser>
-}
-
-const makeSutUser = (): sutTypeUser => {
-  const HttpClient = new HttpClientSpy<DomainUser>();
-  const sutUser = new RemoteUser(HttpClient);
-  return {
-    httpClientUserSpy: HttpClient,
-    sutUser,
-  };
-};
-
-type sutType = {
   sutAuthentication: RemoteAuthentication;
   httpClientSpy: HttpClientSpy<DomainAuthenticationReturn, HttpErrorResponse>;
 }
 
-const makeSut = (): sutType => {
+
+const makeSut = (): sutTypeUser => {
   const HttpClient = new HttpClientSpy<DomainAuthenticationReturn, HttpErrorResponse>();
   const sutAuthentication = new RemoteAuthentication(HttpClient);
+  const HttpClientUser = new HttpClientSpy<DomainUser>();
+  const sutUser = new RemoteUser(HttpClientUser);
   return {
     httpClientSpy: HttpClient,
     sutAuthentication,
+    httpClientUserSpy: HttpClientUser,
+    sutUser,
   };
 };
 
 
 describe("Login Screen", () => {
 
-  //  Functionality tests are in usecase
   
   test("Should render screen correctly without error", () => {
-    const { sutUser } = makeSutUser()
-    const { sutAuthentication } = makeSut()
+    const { sutUser, sutAuthentication  } = makeSut()
+ 
     const storage = new LocalStorageCache()
     const serviceAuthentication = new AuthenticationUserService(sutAuthentication);
 
@@ -65,6 +57,16 @@ describe("Login Screen", () => {
         </MemoryRouter>
       </Provider>
     );
+
+  const emailTextBox = screen.getByTestId('Email Address');
+
+  const passwordTextBox = screen.getByTestId('Password');
+
+  const loginButton = screen.getByRole("button", { name: /Login/i });
+
+  expect(emailTextBox).toBeInTheDocument();
+  expect(passwordTextBox).toBeInTheDocument();
+  expect(loginButton).toBeInTheDocument();
   })
 
 

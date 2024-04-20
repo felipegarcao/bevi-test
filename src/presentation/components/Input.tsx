@@ -22,7 +22,7 @@ export const Control = forwardRef<HTMLInputElement, InputControlProps>(
         onFocus={(e) => {
           e.target.readOnly = false;
         }}
-        data-testid={props.name}
+        alt={props.name}
         {...rest}
       />
     );

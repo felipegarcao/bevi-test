@@ -20,6 +20,7 @@ export function Header({ name_testid }: Props) {
             height="40"
             className="d-inline-block align-top"
             alt=""
+            data-testid="logo"
           />
         </Button>
         <div className="d-flex align-items-center gap-2 justify-content-center">
