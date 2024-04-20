@@ -55,18 +55,16 @@ export function Login({
               <Input.Root error={errors.email?.message}>
                 <Input.Control
                   type="email"
-                  placeholder="email"
                   {...register("email")}
                 />
               </Input.Root>
             </label>
 
-            <label data-testid="Password">
+            <label data-testid="Password" className="my-5">
               Senha
-              <Input.Root error={errors.password?.message} className="mt-5">
+              <Input.Root error={errors.password?.message}>
               <Input.Control
                 type={visibilePassword ? "password" : "text"}
-                placeholder="Senha"
                 {...register("password")}
               />
               <Input.Prefix>
@@ -79,7 +77,7 @@ export function Login({
 
             
 
-            <Button loading={isSubmitting} className="mt-5" role="button">
+            <Button loading={isSubmitting} role="button">
               <span>Efetuar Login</span>
             </Button>
           </form>
