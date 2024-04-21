@@ -5,11 +5,16 @@ body, html, button {
   font-family: "Roboto", sans-serif;
 }
 
+.w-15 {
+  width: 15%;
+}
+
 .container-app {
   min-height: calc(100vh - 68px);
 }
 
 .row {
+  // evitando a quebra quando é utilizado gap
   flex-wrap: nowrap;
 }
 

@@ -49,7 +49,7 @@ export function Table({ searchProducts }: Props) {
             <tbody>
               {searchProducts.map((item, index) => (
                 <tr className="align-middle font-size sm" key={index}>
-                  <td style={{ width: "15%" }}>
+                  <td className="w-15">
                     <div className="d-flex flex-column">
                       <strong data-testid={`name`}>{item.name}</strong>
                       <span data-testid={`price`}>
