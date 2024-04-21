@@ -51,8 +51,7 @@ export function useLoginController({
         toast.error("Credenciais inválidas. Por favor, verifique e tente novamente.")
 
         form.reset()
-      }
-      toast.error(error.message)
+      } 
     }
   };
 

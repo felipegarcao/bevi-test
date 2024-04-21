@@ -12,7 +12,6 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
       register,
       handleSubmit,
       formState: { errors, isSubmitting },
-
     },
     params,
     options,
@@ -102,7 +101,7 @@ export function RegisterProducts({ service }: useRegisterProductsControllerDI) {
           </label>
         </div>
 
-        <Button className="mt-4 col" type="submit" disabled={loading || isSubmitting}>
+        <Button className="mt-4 col" loading={isSubmitting || loading}>
           <span> {params ? 'Alterar' : 'Cadastrar'}</span>
         </Button>
 

@@ -4,6 +4,7 @@ import { useLoginControllerDI } from "./types";
 import * as Input from "@/presentation/components/Input";
 import { Button } from "@/presentation/components/Button";
 import "./styles.scss";
+import Logo from '/logo.png'
 
 export function Login({
   remoteAuthentication,
@@ -35,9 +36,9 @@ export function Login({
       </div>
       <div className="col col-lg-6 d-flex flex-column  justify-content-between  p-5">
         <img
-          src="https://www.bevioficial.com.br/_next/static/media/bevi-default-m.da7ba5cc.svg"
-          width="130"
-          height="70"
+          src={Logo}
+          width="170"
+          height="80"
           className="d-inline-block align-top"
           alt=""
         />

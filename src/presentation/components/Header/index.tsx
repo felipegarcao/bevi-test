@@ -2,10 +2,9 @@ import { userReducerAdapter } from "@/main/adapters/user-reducer-adapter";
 import { LogOut } from "lucide-react";
 import { Button } from "../Button";
 import { useNavigate } from "react-router-dom";
-import { Props } from "./types";
+import Logo from '/logo.png'
 
-
-export function Header({ name_testid }: Props) {
+export function Header() {
 
   const { logout, user } = userReducerAdapter()
   const navigate = useNavigate()
@@ -15,8 +14,8 @@ export function Header({ name_testid }: Props) {
       <div className="container mx-auto">
         <Button variant="ghost" className="navbar-brand btn" onClick={() => navigate('/')}>
           <img
-            src="https://www.bevioficial.com.br/_next/static/media/bevi-default-m.da7ba5cc.svg"
-            width="70"
+            src={Logo}
+            width="90"
             height="40"
             className="d-inline-block align-top"
             alt=""
@@ -24,7 +23,7 @@ export function Header({ name_testid }: Props) {
           />
         </Button>
         <div className="d-flex align-items-center gap-2 justify-content-center">
-          <span className="d-md-block d-none">Olá, <strong data-testid={name_testid}>{user.name}</strong></span>
+          <span className="d-md-block d-none">Olá, <strong>{user.name}</strong></span>
           <Button variant="ghost" onClick={logout} data-testid="logout">
             <LogOut className="text-danger" />
           </Button>

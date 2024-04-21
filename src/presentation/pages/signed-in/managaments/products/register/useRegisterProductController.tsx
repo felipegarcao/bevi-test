@@ -18,6 +18,8 @@ export function useRegisterProductController({ service }: useRegisterProductsCon
   const params: Products.Model = location.state?.product
 
 
+
+
   const form = useForm<Products.Model>({
     resolver: zodResolver(CreateProductBodySchema),
     defaultValues: {
@@ -49,7 +51,6 @@ export function useRegisterProductController({ service }: useRegisterProductsCon
     setLoading(true);
 
     try {
-
       const payload: Products.Model = {
         description: product.description,
         name: product.name,
@@ -73,12 +74,12 @@ export function useRegisterProductController({ service }: useRegisterProductsCon
         logout();
       }
 
-    } finally {
-      setLoading(false)
     }
   }
 
-  async function handleEditProduct(product: Products.Model) {
+
+
+  const  handleEditProduct: SubmitHandler<Products.Model> = async (product: Products.Model) => {
     setLoading(true)
     try {
       await service.updated({
@@ -109,10 +110,10 @@ export function useRegisterProductController({ service }: useRegisterProductsCon
     }
   }
 
-  async function handleCreateProduct(product: Products.Model) {
+
+  const  handleCreateProduct: SubmitHandler<Products.Model> = async (product: Products.Model) => {
     setLoading(true)
     try {
-
 
       await service.create({
         description: product.description,
