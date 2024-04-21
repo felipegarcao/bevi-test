@@ -22,6 +22,16 @@ ou
 npm install
 ```
 
+## Executar Projeto
+
+```
+yarn dev
+```
+ou
+```
+npm nun dev
+```
+
 ## Principais Recursos Utilizados
 
 - **Redux**: Biblioteca para gerenciamento de estados globais
