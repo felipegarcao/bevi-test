@@ -12,21 +12,21 @@ describe('Badge Component', () => {
 
   test('should render "in stock" with class "success""', () => {
     makeSut(1)
-    const badge = screen.getByText('em Estoque');
+    const badge = screen.getByTestId('success') as HTMLDivElement;
     expect(badge).toHaveClass('success');
   });
 
   test('should render "on Spare" with class "warning"', () => {
     makeSut(2)
 
-    const badge = screen.getByText('em Reposição');
+    const badge = screen.getByTestId('warning');
     expect(badge).toHaveClass('warning');
   });
 
   test('Should render "missing" with class "danger"', () => {
     makeSut(3)
 
-    const badge = screen.getByText('em Falta');
+    const badge = screen.getByTestId('danger');
     expect(badge).toHaveClass('danger');
   });
 

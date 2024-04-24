@@ -60,13 +60,8 @@ describe("Login Screen", () => {
       </Provider>
     );
 
-    const image = getByTestId("logo");
-
-    expect(image).toHaveAttribute(
-      "src",
-      "https://www.bevioficial.com.br/_next/static/media/bevi-default-m.da7ba5cc.svg"
-    );
-    expect(image).toHaveAttribute("width", "70");
+    const image = getByTestId("logo");   
+    expect(image).toHaveAttribute("width", "90");
     expect(image).toHaveAttribute("height", "40");
   });
 

@@ -3,9 +3,9 @@ import "./styles.scss";
 
 export function Badge({ status }: { status: STATUS }) {
   const statusDetails = [
-    { id: 1, name: "em Estoque", className: " success" },
+    { id: 1, name: "em Estoque", className: "success" },
     { id: 2, name: "em Reposição", className: "warning" },
-    { id: 3, name: "em Falta", className: " danger" },
+    { id: 3, name: "em Falta", className: "danger" },
   ];
 
   const selectedStatus = statusDetails.find((item) => item.id === status);
@@ -15,7 +15,7 @@ export function Badge({ status }: { status: STATUS }) {
   }
 
   return (
-    <div className={`flag ${selectedStatus.className} `}>
+    <div className={`flag ${selectedStatus.className} `} data-testid={selectedStatus.className}>
       <span>{selectedStatus.name}</span>
     </div>
   );

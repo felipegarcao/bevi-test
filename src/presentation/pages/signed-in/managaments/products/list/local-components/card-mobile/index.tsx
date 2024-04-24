@@ -28,7 +28,7 @@ export function CardMobile({
 
       <div className="d-flex flex-column my-4">
         <strong className="font-size xs">Descrição</strong>
-        <span className="font-size sm text-justify" data-testid="price">{(product.description)}</span>
+        <span className="font-size sm text-justify" data-testid="description">{(product.description)}</span>
       </div>
 
       <div className="d-flex flex-column my-4">

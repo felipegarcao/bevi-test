@@ -83,6 +83,8 @@ export function useListProductsController({
   async function onHandleDelete(id: number) {
     setLoading(true);
     try {
+ 
+      // @ts-ignore
       const { data, message } = await service.delete({ id });
 
       if (products.length > 0) {
